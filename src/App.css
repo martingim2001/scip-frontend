@@ -484,4 +484,12 @@ body {
     .reloj-sistema {
         display: none;
     }
+    /* 8. Liberamos el bloqueo de scroll para poder deslizar en el celular */
+    body {
+        overflow: auto;
+    }
+    
+    .contenedor-derecho {
+        overflow: visible;
+    }
 }
