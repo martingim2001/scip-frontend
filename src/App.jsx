@@ -42,7 +42,7 @@ function App() {
   // Lógica para realizar la búsqueda conectada al Backend
   const realizarBusqueda = async (patenteIngresada) => {
     try {
-      const respuesta = await fetch('http://localhost:5000/api/vehiculos/consulta', {
+      const respuesta = await fetch('https://scip-backend-yktr.onrender.com/api/vehiculos/consulta', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
