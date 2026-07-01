@@ -61,7 +61,7 @@ function App() {
   // Lógica para procesar el inicio de sesión con la Base de Datos
   const manejarLogin = async (datosCredenciales) => {
     try {
-      const respuesta = await fetch('https://scip-backend-yktr.onrender.com/api/vehiculos/consulta', {
+      const respuesta = await fetch('https://scip-backend-yktr.onrender.com/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datosCredenciales)
