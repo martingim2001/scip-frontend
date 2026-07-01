@@ -48,7 +48,9 @@ body {
   overflow-y: auto; /* Permite scroll solo en esta área si el contenido crece */
 }
 
-/* --- Barra Superior --- */
+/* ==========================================
+   BARRA SUPERIOR (TOPBAR) Y PERFIL
+========================================== */
 .topbar {
   height: 70px;
   min-height: 70px;
@@ -72,13 +74,25 @@ body {
   gap: 30px;
 }
 
-/* Perfil y Reloj */
+/* --- Perfil y Menú Desplegable --- */
+.perfil-usuario-contenedor {
+  position: relative; /* Clave para que el menú flote debajo de este elemento */
+  border-right: 1px solid #2a303c;
+  padding-right: 30px;
+}
+
 .perfil-usuario {
   display: flex;
   align-items: center;
   gap: 10px;
-  border-right: 1px solid #2a303c;
-  padding-right: 30px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.perfil-usuario:hover {
+  background-color: rgba(255, 255, 255, 0.05); /* Brillo sutil al pasar el mouse */
 }
 
 .avatar-circulo {
@@ -109,6 +123,55 @@ body {
   color: #fff;
 }
 
+/* --- Estilos del Cuadro Desplegable (Dropdown) --- */
+.dropdown-perfil {
+  position: absolute;
+  top: 110%; /* Lo empuja justo debajo del perfil */
+  right: 30px; /* Lo alinea a la derecha */
+  background-color: #121418;
+  border: 1px solid #2a303c;
+  border-radius: 8px;
+  width: 200px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7); /* Sombra oscura para despegarlo del fondo */
+  display: flex;
+  flex-direction: column;
+  z-index: 1000; /* Asegura que quede siempre por encima de todo */
+  overflow: hidden;
+  animation: aparecer 0.2s ease-out forwards;
+}
+
+/* Animación rápida de aparición */
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-item {
+  padding: 15px 20px;
+  color: #ccc;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dropdown-item:hover {
+  background-color: #1e3a5f;
+  color: #fff;
+}
+
+.dropdown-item.logout {
+  border-top: 1px solid #2a303c;
+}
+
+.dropdown-item.logout:hover {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+/* --- Reloj del Sistema --- */
 .reloj-sistema {
   display: flex;
   flex-direction: column;
@@ -368,73 +431,57 @@ body {
   font-size: 14px;
   cursor: pointer;
 }
-/* --- Contenedor Relativo para el Menú --- */
-.perfil-usuario-contenedor {
-  position: relative; /* Clave para que el menú flote debajo de este elemento */
-  border-right: 1px solid #2a303c;
-  padding-right: 30px;
-}
 
-/* Modificamos un poco el perfil para que tenga efecto de botón */
-.perfil-usuario {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  padding: 5px 10px;
-  border-radius: 8px;
-  transition: background-color 0.3s ease;
-}
+/* =========================================
+   DISEÑO RESPONSIVO (MÓVILES Y TABLETS)
+========================================= */
+@media screen and (max-width: 768px) {
+    /* 1. Apilamos el diseño: Sidebar arriba, contenido principal abajo */
+    .layout-principal {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+    }
 
-.perfil-usuario:hover {
-  background-color: rgba(255, 255, 255, 0.05); /* Brillo sutil al pasar el mouse */
-}
+    /* 2. La barra lateral ahora ocupa todo el ancho y se adapta */
+    .sidebar {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #2a303c;
+        padding: 15px;
+    }
 
-/* --- Estilos del Cuadro Desplegable (Dropdown) --- */
-.dropdown-perfil {
-  position: absolute;
-  top: 110%; /* Lo empuja justo debajo del perfil */
-  right: 30px; /* Lo alinea a la derecha */
-  background-color: #121418;
-  border: 1px solid #2a303c;
-  border-radius: 8px;
-  width: 200px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7); /* Sombra oscura para despegarlo del fondo */
-  display: flex;
-  flex-direction: column;
-  z-index: 1000; /* Asegura que quede siempre por encima de todo */
-  overflow: hidden;
-  animation: aparecer 0.2s ease-out forwards;
-}
+    /* 3. El dashboard (buscador y tabla) pasa a tener 1 sola columna en vez de 2 */
+    .grid-dashboard {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
 
-/* Animación rápida de aparición */
-@keyframes aparecer {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+    /* 4. Reducimos el relleno de los costados para aprovechar la pantalla */
+    .dashboard-content {
+        padding: 15px;
+    }
 
-.dropdown-item {
-  padding: 15px 20px;
-  color: #ccc;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+    /* 5. Apilamos el input de la patente y el botón de buscar */
+    .input-group {
+        flex-direction: column;
+    }
+    .input-group button {
+        width: 100%; /* El botón ocupará todo el ancho para ser fácil de tocar */
+    }
 
-.dropdown-item:hover {
-  background-color: #1e3a5f;
-  color: #fff;
-}
+    /* 6. Ajustes en la barra superior (topbar) */
+    .topbar {
+        padding: 0 15px;
+    }
+    .perfil-usuario-contenedor {
+        padding-right: 0;
+        border-right: none;
+    }
 
-/* Un estilo especial y peligroso para el botón de cerrar sesión */
-.dropdown-item.logout {
-  border-top: 1px solid #2a303c;
-}
-
-.dropdown-item.logout:hover {
-  background-color: #e74c3c;
-  color: #fff;
+    /* 7. Ocultamos el reloj del sistema en celulares (ahorra mucho espacio) */
+    .reloj-sistema {
+        display: none;
+    }
 }
