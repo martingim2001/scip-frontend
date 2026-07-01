@@ -1,0 +1,440 @@
+/* ==========================================
+   RESETEO Y VARIABLES GLOBALES
+========================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #1a1e25; /* Fondo principal gris oscuro */
+  color: #ffffff;
+  overflow: hidden; /* Evita el scroll doble en la página completa */
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* ==========================================
+   ESTRUCTURA PRINCIPAL (LAYOUT)
+========================================== */
+.layout-principal {
+  display: flex;
+  height: 100vh;
+}
+
+/* --- Barra Lateral Izquierda --- */
+.sidebar {
+  width: 250px;
+  background-color: #121418;
+  padding: 20px;
+  border-right: 1px solid #2a303c;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Contenedor Derecho (Topbar + Dashboard) --- */
+.contenedor-derecho {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #1a1e25;
+  overflow-y: auto; /* Permite scroll solo en esta área si el contenido crece */
+}
+
+/* --- Barra Superior --- */
+.topbar {
+  height: 70px;
+  min-height: 70px;
+  background-color: #121418;
+  border-bottom: 1px solid #2a303c;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+}
+
+.topbar-titulo p {
+  font-size: 20px;
+  color: #ccc;
+  font-weight: 500;
+}
+
+.topbar-info {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+/* Perfil y Reloj */
+.perfil-usuario {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-right: 1px solid #2a303c;
+  padding-right: 30px;
+}
+
+.avatar-circulo {
+  background-color: #2a303c;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+
+.datos-agente {
+  display: flex;
+  flex-direction: column;
+}
+
+.rol-agente {
+  font-size: 12px;
+  color: #3498db;
+  font-weight: bold;
+}
+
+.nombre-agente {
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.reloj-sistema {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.fecha-texto {
+  font-size: 12px;
+  color: #888;
+  text-transform: capitalize;
+}
+
+.hora-texto {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* ==========================================
+   DASHBOARD Y COMPONENTES
+========================================== */
+.dashboard-content {
+  padding: 30px;
+  flex: 1;
+}
+
+.grid-dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+  gap: 30px;
+}
+
+.columna-izquierda {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* --- Panel de Búsqueda --- */
+.panel-busqueda {
+  background-color: #121418;
+  border: 1px solid #1e3a5f;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(41, 128, 185, 0.15);
+}
+
+.panel-busqueda h3 {
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+}
+
+.input-group {
+  display: flex;
+  gap: 15px;
+}
+
+.input-group input {
+  flex: 1;
+  background-color: #0b0c10;
+  border: 1px solid #1e3a5f;
+  color: #fff;
+  padding: 12px 15px;
+  border-radius: 5px;
+  font-size: 18px;
+  outline: none;
+  text-transform: uppercase;
+}
+
+.input-group input:focus {
+  border-color: #3498db;
+}
+
+.input-group button {
+  background-color: #1e3a5f;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.input-group button:hover {
+  background-color: #2980b9;
+}
+
+/* --- Panel Historial (Tabla) --- */
+.panel-historial {
+  background-color: #121418;
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid #2a303c;
+}
+
+.panel-historial h3 {
+  color: #fff;
+  font-size: 15px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #2a303c;
+  padding-bottom: 10px;
+}
+
+.tabla-historial {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.tabla-historial th {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid #2a303c;
+  color: #888;
+  font-weight: bold;
+}
+
+.tabla-historial td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #1e222b;
+  color: #ccc;
+}
+
+.texto-verde { color: #2ecc71 !important; font-weight: 500; }
+.texto-rojo { color: #e74c3c !important; font-weight: 500; }
+
+.paginacion {
+  text-align: right;
+  padding-top: 15px;
+  color: #666;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* --- Tarjeta de Resultado Dinámica --- */
+.tarjeta-resultado {
+  background-color: #121418;
+  border-radius: 10px;
+  padding: 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.icono-estado {
+  font-size: 70px;
+  margin-bottom: 10px;
+}
+
+.datos-vehiculo p {
+  font-size: 18px;
+  margin: 8px 0;
+  color: #aaa;
+}
+
+.datos-vehiculo strong {
+  color: #fff;
+  font-size: 20px;
+}
+
+/* Estados de colores */
+.estado-verde {
+  border: 2px solid #2ecc71;
+  box-shadow: 0 0 25px rgba(46, 204, 113, 0.2);
+}
+.estado-verde h2 { color: #2ecc71; margin: 15px 0 25px; font-size: 26px; }
+
+.estado-rojo {
+  border: 2px solid #e74c3c;
+  box-shadow: 0 0 25px rgba(231, 76, 60, 0.3);
+}
+.estado-rojo h2 { color: #e74c3c; margin: 15px 0 25px; font-size: 26px; }
+
+.estado-gris {
+  border: 2px solid #7f8c8d;
+  box-shadow: 0 0 20px rgba(127, 140, 141, 0.1);
+}
+.estado-gris h2 { color: #7f8c8d; margin: 15px 0 25px; font-size: 24px; }
+
+
+/* ==========================================
+   PANTALLA DE LOGIN
+========================================== */
+.login-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0b0c10;
+  background-image: radial-gradient(circle at center, #1e3a5f 0%, #0b0c10 40%);
+}
+
+.login-box {
+  background-color: #121418;
+  padding: 40px;
+  border-radius: 10px;
+  border: 1px solid #2a303c;
+  width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group-login label {
+  display: block;
+  color: #ccc;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.input-group-login input {
+  width: 100%;
+  background-color: #1a1e25;
+  border: 1px solid #2a303c;
+  color: #fff;
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+}
+
+.input-group-login input:focus {
+  border-color: #3498db;
+}
+
+.btn-login {
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.btn-login:hover {
+  background-color: #1c5980;
+}
+
+.toggle-registro {
+  text-align: center;
+  color: #3498db;
+  margin-top: 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
+/* --- Contenedor Relativo para el Menú --- */
+.perfil-usuario-contenedor {
+  position: relative; /* Clave para que el menú flote debajo de este elemento */
+  border-right: 1px solid #2a303c;
+  padding-right: 30px;
+}
+
+/* Modificamos un poco el perfil para que tenga efecto de botón */
+.perfil-usuario {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.perfil-usuario:hover {
+  background-color: rgba(255, 255, 255, 0.05); /* Brillo sutil al pasar el mouse */
+}
+
+/* --- Estilos del Cuadro Desplegable (Dropdown) --- */
+.dropdown-perfil {
+  position: absolute;
+  top: 110%; /* Lo empuja justo debajo del perfil */
+  right: 30px; /* Lo alinea a la derecha */
+  background-color: #121418;
+  border: 1px solid #2a303c;
+  border-radius: 8px;
+  width: 200px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7); /* Sombra oscura para despegarlo del fondo */
+  display: flex;
+  flex-direction: column;
+  z-index: 1000; /* Asegura que quede siempre por encima de todo */
+  overflow: hidden;
+  animation: aparecer 0.2s ease-out forwards;
+}
+
+/* Animación rápida de aparición */
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-item {
+  padding: 15px 20px;
+  color: #ccc;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dropdown-item:hover {
+  background-color: #1e3a5f;
+  color: #fff;
+}
+
+/* Un estilo especial y peligroso para el botón de cerrar sesión */
+.dropdown-item.logout {
+  border-top: 1px solid #2a303c;
+}
+
+.dropdown-item.logout:hover {
+  background-color: #e74c3c;
+  color: #fff;
+}
