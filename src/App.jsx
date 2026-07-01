@@ -19,8 +19,13 @@ function App() {
     modelo: "-",
     anio: "-",
     tipo: "-",
+    color: "-",
+    titular_nombre: "-",
+    titular_dni: "-",
+    numero_chasis: "-",
+    numero_motor: "-",
     icono: "🔍"
-  });
+});
   // Estado para controlar si el menú del perfil está abierto o cerrado
   const [menuPerfilAbierto, setMenuPerfilAbierto] = useState(false);
 
@@ -169,10 +174,15 @@ function App() {
               <div className="icono-estado">{vehiculoSeleccionado.icono}</div>
               <h2>{vehiculoSeleccionado.titulo}</h2>
               <div className="datos-vehiculo">
-                <p>Marca: <strong>{vehiculoSeleccionado.marca}</strong></p>
-                <p>Modelo: <strong>{vehiculoSeleccionado.modelo}</strong></p>
-                <p>Año: <strong>{vehiculoSeleccionado.anio}</strong></p>
-                <p>Tipo: <strong>{vehiculoSeleccionado.tipo}</strong></p>
+               <p>Marca y Modelo: <strong>{vehiculoSeleccionado.marca} {vehiculoSeleccionado.modelo}</strong></p>
+          <p>Tipo: <strong>{vehiculoSeleccionado.tipo}</strong> | Año: <strong>{vehiculoSeleccionado.anio}</strong></p>
+          <p>Color: <strong>{vehiculoSeleccionado.color}</strong></p>
+          <hr style={{ borderColor: '#2a303c', margin: '15px 0' }} />
+          <p>Titular: <strong>{vehiculoSeleccionado.titular_nombre}</strong></p>
+          <p>DNI: <strong>{vehiculoSeleccionado.titular_dni}</strong></p>
+          <hr style={{ borderColor: '#2a303c', margin: '15px 0' }} />
+          <p>Nº Chasis: <strong>{vehiculoSeleccionado.numero_chasis}</strong></p>
+          <p>Nº Motor: <strong>{vehiculoSeleccionado.numero_motor}</strong></p>
               </div>
             </div>
 
