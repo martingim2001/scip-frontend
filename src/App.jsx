@@ -3,6 +3,8 @@ import SearchPanel from './components/SearchPanel';
 import HistoryTable from './components/HistoryTable';
 import Login from './components/Login';
 import QRCode from 'react-qr-code';
+import CedulaPrint from './components/CedulaPrint';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css'
 
 function App() {
@@ -95,14 +97,21 @@ function App() {
     }
   };
 
-  // 1. Control de Acceso: Si no hay un usuario autenticado, muestra la pantalla de Login
-  if (!usuarioLogueado) {
-    return <Login onLoginExitoso={manejarLogin} />;
-  }
+  // 2. Panel Principal con Sistema de Rutas
+return (
+  <Router>
+    <Routes>
+      {/* Ruta para la vista de impresión limpia */}
+      <Route path="/imprimir" element={<CedulaPrint />} />
 
-  // 2. Panel Principal (Dashboard) visible solo tras un inicio de sesión correcto
-  return (
-    <div className="layout-principal">
+      {/* Ruta principal del Dashboard */}
+      <Route 
+        path="/" 
+        element={
+          !usuarioLogueado ? (
+            <Login onLoginExitoso={manejarLogin} />
+          ) : (
+            <div className="layout-principal">
       {/* BARRA LATERAL IZQUIERDA */}
       <aside className="sidebar">
         <h2 style={{ color: '#fff', marginBottom: '20px' }}>S.C.I.P.</h2>
@@ -220,17 +229,27 @@ function App() {
           {/* --- FIN DE LA CÉDULA TIPO DNRPA --- */}
           {/* Botón para imprimir la cédula física */}
           <button 
-            className="btn-imprimir" 
-            onClick={() => window.print()}
-          >
-            🖨️ IMPRIMIR TARJETA FÍSICA
-          </button>
+  className="btn-imprimir" 
+  onClick={() => {
+    // Guardamos los datos en la memoria temporal del navegador
+    localStorage.setItem('vehiculoParaImprimir', JSON.stringify(vehiculoSeleccionado));
+    // Abrimos una pestaña nueva
+    window.open('/imprimir', '_blank');
+  }}
+>
+  🖨️ GENERAR CÉDULA EN VENTANA NUEVA
+</button>
             </div>
 
           </div>
         </main>
-      </div>
-    </div>
+          </div>
+          </div>
+        )
+      } 
+      />
+    </Routes>
+  </Router>
   );
 }
 
