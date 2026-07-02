@@ -571,14 +571,16 @@ body {
 
   /* 4. El diseño exacto de la tarjeta DNRPA física */
   .cedula-fisica {
-    position: relative !important; /* CLAVE: Fija los límites de la tarjeta */
+    position: relative !important;
     width: 8.5cm;
     height: 5.5cm;
-    border: 1px dashed #7f8c8d; 
+    border: 1px dashed #95a5a6 !important; /* Línea punteada gris clarito */
     box-shadow: none !important;
     background: linear-gradient(135deg, #d2f1f8 0%, #a2def0 100%) !important;
     color: #000000 !important;
     overflow: hidden !important;
+    padding: 5px !important; /* Un poquito de aire interno para que no pegue en el borde */
+    box-sizing: border-box !important;
   }
 
   .cedula-fisica * {
@@ -601,35 +603,36 @@ body {
   /* Tiramos los datos a la izquierda y armamos la estructura */
   .cedula-datos {
     text-align: left !important;
-    padding-left: 10px !important; /* Separamos el texto del borde izquierdo */
-    max-width: 75% !important; /* Dejamos espacio para el QR a la derecha */
+    padding-left: 8px !important;
+    max-width: 75% !important; /* Respeta el espacio del QR */
     margin-top: 5px !important;
   }
 
   /* Convertimos cada línea en una fila perfecta */
   .cedula-datos p {
     display: flex !important;
-    align-items: baseline !important;
+    align-items: flex-start !important; /* Si el texto es largo, se alinea arriba */
     font-size: 10px !important; 
-    margin-bottom: 3px !important; /* Separación entre renglones */
+    margin-bottom: 4px !important;
     line-height: 1.1 !important;
   }
 
   /* Ancho fijo para las etiquetas (MARCA, MODELO, etc.) para que queden encolumnadas */
   .cedula-datos span {
-    display: inline-block !important;
-    width: 65px !important; /* Este ancho alinea todo perfecto */
+    width: 65px !important; 
+    flex-shrink: 0 !important; /* MAGIA: Evita que la palabra se aplaste */
     font-weight: normal !important;
     color: #2c3e50 !important;
-    font-size: 9px !important;
   }
 
   /* Resaltamos el valor de la base de datos */
   .cedula-datos strong {
+    flex: 1 !important; /* Toma el espacio que sobra */
     font-weight: bold !important;
-    font-size: 11px !important;
+    font-size: 10px !important;
     text-transform: uppercase !important;
     color: #000000 !important;
+    word-wrap: break-word !important; /* Rompe la palabra si es muy larga */
   }
 
   /* 5. BLINDAJE DEL QR: Bloqueo estricto de tamaño y posición */
