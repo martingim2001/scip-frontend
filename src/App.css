@@ -575,5 +575,22 @@ body {
   /* Aseguramos que los textos internos también sean negros al imprimir */
   .cedula-fisica * {
     color: #000000 !important;
+    font-weight: bold !important;
+  }
+    /* OBLIGAR AL QR A MANTENER SU TAMAÑO EN LA IMPRESORA */
+  .cedula-qr-contenedor {
+    background-color: #ffffff !important;
+    min-width: 60px !important;
+    min-height: 60px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px !important;
+  }
+
+  .cedula-qr-contenedor svg {
+    width: 60px !important;
+    height: 60px !important;
+    visibility: visible !important;
   }
 }
