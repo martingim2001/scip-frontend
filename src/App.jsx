@@ -23,6 +23,7 @@ function App() {
     color: "-",
     titular_nombre: "-",
     titular_dni: "-",
+    domicilio: "-",
     numero_chasis: "-",
     numero_motor: "-",
     icono: "🔍"
@@ -212,7 +213,7 @@ function App() {
               <div className="cedula-datos">
                 <p><span>TITULAR:</span> <strong>{vehiculoSeleccionado.titular_nombre}</strong></p>
                 <p><span>D.N.I.:</span> <strong>{vehiculoSeleccionado.titular_dni}</strong></p>
-                <p><span>DOMICILIO:</span> <strong>ALDERETES - CRUZ ALTA, TUCUMÁN</strong></p>
+                <p><span>DOMICILIO:</span> <strong>{vehiculoSeleccionado.domicilio}</strong></p>
               </div>
             </div>
           </div>
