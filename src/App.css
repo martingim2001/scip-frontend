@@ -528,69 +528,67 @@ body {
   padding: 5px;
   border-radius: 5px;
 }
+/* ==========================================
+   ESTILOS PARA IMPRIMIR LAS TARJETAS
+========================================== */
 @media print {
-  /* Fuerza al navegador a imprimir los fondos y degradados celestes */
+  /* 1. Forzamos los colores celestes de fondo */
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
   
-  /* Oculta la web y muestra solo el lote de cédulas masivas */
-  body * {
-    visibility: hidden;
-  }
-  .contenedor-impresion-masiva, .contenedor-impresion-masiva * {
-    visibility: visible;
-  }
-  
+  /* 2. Acomodamos el listado para la hoja A4 */
   .contenedor-impresion-masiva {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
     display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
+    flex-wrap: wrap; 
+    gap: 15px; 
     justify-content: center;
+    padding: 0;
+    margin: 0;
   }
 
+  /* 3. Evitamos que una tarjeta se corte a la mitad en el cambio de hoja */
   .par-cedulas {
-    page-break-inside: avoid; /* Evita que una tarjeta se corte a la mitad entre dos hojas */
+    page-break-inside: avoid;
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-bottom: 20px;
   }
 
+  /* 4. El diseño exacto de la tarjeta DNRPA física */
   .cedula-fisica {
     width: 8.5cm;
     height: 5.5cm;
-    border: 1px dashed #7f8c8d;
-    box-shadow: none;
-    /* BLINDAJE CONTRA MODO OSCURO: */
+    border: 1px dashed #7f8c8d; /* Guía para la tijera */
+    box-shadow: none !important;
     background: linear-gradient(135deg, #d2f1f8 0%, #a2def0 100%) !important;
     color: #000000 !important;
   }
-  
-  /* Aseguramos que los textos internos también sean negros al imprimir */
+
   .cedula-fisica * {
     color: #000000 !important;
     font-weight: bold !important;
   }
-    /* OBLIGAR AL QR A MANTENER SU TAMAÑO EN LA IMPRESORA */
+
+  /* 5. BLINDAJE DEL QR: Cajita blanca forzada para que el escáner lo lea perfecto */
   .cedula-qr-contenedor {
     background-color: #ffffff !important;
-    min-width: 60px !important;
-    min-height: 60px !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px !important;
+    width: 65px !important;
+    height: 65px !important;
+    padding: 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 4px;
+    border: 1px solid #000 !important; /* Bordecito negro para que resalte */
   }
 
+  /* Forzamos al SVG (el dibujo del QR) a mostrarse sí o sí */
   .cedula-qr-contenedor svg {
-    width: 60px !important;
-    height: 60px !important;
-    visibility: visible !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
   }
 }
