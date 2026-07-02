@@ -52,7 +52,7 @@ const ImprimirTodas = () => {
           <div className="cedula-fisica dorso">
             <div className="cedula-fondo-agua">DNRPA</div>
             <div className="cedula-cabecera">
-              <p className="titulo-cedula" style={{textAlign: 'right'}}>IDENTIFICACIÓN DEL TITULAR</p>
+              <p className="titulo-cedula" style={{textAlign: 'center'}}>IDENTIFICACIÓN DEL TITULAR</p>
             </div>
             <div className="cedula-datos">
               <p><span>TITULAR:</span> <strong>{v.titular_nombre}</strong></p>

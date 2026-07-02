@@ -638,7 +638,7 @@ body {
   /* 5. BLINDAJE DEL QR: Bloqueo estricto de tamaño y posición */
   .cedula-qr-contenedor {
     position: absolute !important;
-    bottom: 10px !important;
+    bottom: 30px !important;
     right: 10px !important;
     z-index: 9999 !important;
     background-color: #ffffff !important;
