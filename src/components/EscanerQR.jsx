@@ -5,52 +5,54 @@ const EscanerQR = ({ onEscaneoExitoso }) => {
   const scannerRef = useRef(null);
 
   useEffect(() => {
-    // 1. SOLUCIÓN BUG REACT 18: Vaciamos el contenedor HTML antes de iniciar el escáner
+    // 1. Vaciamos el contenedor para evitar duplicados
     const contenedor = document.getElementById("lector-qr");
     if (contenedor) {
       contenedor.innerHTML = ""; 
     }
 
-    // 2. Creamos la instancia del escáner
+    // 2. Creamos el escáner fijando el aspecto para que no salte de tamaño
     const scanner = new Html5QrcodeScanner(
       "lector-qr",
-      { fps: 10, qrbox: { width: 250, height: 250 } },
+      { 
+        fps: 10, 
+        qrbox: { width: 220, height: 220 },
+        aspectRatio: 1.0 // Fuerza a que sea un cuadro perfecto y estable
+      },
       false
     );
 
-    // 3. Iniciamos el renderizado
+    // 3. Iniciamos
     scanner.render(
       (textoDecodificado) => {
-        // Al escanear con éxito, limpiamos y mandamos el texto
         scanner.clear().then(() => {
           onEscaneoExitoso(textoDecodificado);
-        }).catch(err => console.error("Error al apagar tras éxito:", err));
+        }).catch(err => console.error("Error al apagar:", err));
       },
       () => {
-        // Error continuo de búsqueda (lo dejamos vacío para que no sature la consola)
+        // Dejar vacío para no saturar la consola
       }
     );
 
-    // Guardamos la referencia para el apagado seguro
     scannerRef.current = scanner;
 
-    // 4. Limpieza cuando el componente se oculta o se cierra
+    // 4. Limpieza al cerrar
     return () => {
       if (scannerRef.current) {
         scannerRef.current.clear().catch(error => {
-          console.warn("Aviso controlado al desmontar cámara:", error);
+          console.warn("Cámara cerrada correctamente.", error);
         });
       }
     };
-  }, [onEscaneoExitoso]);
+  }, []); // <--- ¡CLAVE: Queda vacío [] para que NO se reinicie en bucle!
 
   return (
-    <div className="contenedor-escaner">
+    <div className="contenedor-escaner" style={{ minHeight: '280px', display: 'flex', alignItems: 'center' }}>
       <div 
         id="lector-qr" 
         style={{ 
           width: '100%', 
-          maxWidth: '400px', 
+          maxWidth: '320px', 
           margin: '0 auto', 
           backgroundColor: '#fff',
           borderRadius: '8px',
