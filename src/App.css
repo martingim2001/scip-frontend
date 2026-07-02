@@ -493,3 +493,38 @@ body {
         overflow: visible;
     }
 }
+.cedula-card {
+  background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+  border: 1px solid #80deea;
+  border-radius: 15px;
+  padding: 20px;
+  width: 350px;
+  margin: 20px auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  color: #006064;
+  font-family: 'Courier New', Courier, monospace; /* Estilo de máquina de escribir */
+}
+
+.cedula-header {
+  text-align: center;
+  border-bottom: 2px solid #006064;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+}
+
+.cedula-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cedula-info p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.cedula-qr {
+  background: white;
+  padding: 5px;
+  border-radius: 5px;
+}

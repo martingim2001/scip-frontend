@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import SearchPanel from './components/SearchPanel';
 import HistoryTable from './components/HistoryTable';
 import Login from './components/Login';
+import QRCode from 'react-qr-code';
 import './App.css'
 
 function App() {
@@ -173,17 +174,49 @@ function App() {
             <div className={`tarjeta-resultado estado-${vehiculoSeleccionado.estado}`}>
               <div className="icono-estado">{vehiculoSeleccionado.icono}</div>
               <h2>{vehiculoSeleccionado.titulo}</h2>
-              <div className="datos-vehiculo">
-               <p>Marca y Modelo: <strong>{vehiculoSeleccionado.marca} {vehiculoSeleccionado.modelo}</strong></p>
-          <p>Tipo: <strong>{vehiculoSeleccionado.tipo}</strong> | Año: <strong>{vehiculoSeleccionado.anio}</strong></p>
-          <p>Color: <strong>{vehiculoSeleccionado.color}</strong></p>
-          <hr style={{ borderColor: '#2a303c', margin: '15px 0' }} />
-          <p>Titular: <strong>{vehiculoSeleccionado.titular_nombre}</strong></p>
-          <p>DNI: <strong>{vehiculoSeleccionado.titular_dni}</strong></p>
-          <hr style={{ borderColor: '#2a303c', margin: '15px 0' }} />
-          <p>Nº Chasis: <strong>{vehiculoSeleccionado.numero_chasis}</strong></p>
-          <p>Nº Motor: <strong>{vehiculoSeleccionado.numero_motor}</strong></p>
+              {/* --- INICIO DE LA CÉDULA TIPO DNRPA --- */}
+          <div className="contenedor-cedulas">
+            {/* FRENTE DE LA CÉDULA */}
+            <div className="cedula-fisica">
+              <div className="cedula-fondo-agua">DNRPA</div>
+              <div className="cedula-cabecera">
+                <p className="republica">REPÚBLICA ARGENTINA</p>
+                <p className="titulo-cedula">CÉDULA DE IDENTIFICACIÓN DE VEHÍCULOS</p>
               </div>
+              <div className="cedula-contenido">
+                <div className="cedula-datos">
+                  <p><span>MARCA:</span> <strong>{vehiculoSeleccionado.marca}</strong></p>
+                  <p><span>MODELO:</span> <strong>{vehiculoSeleccionado.modelo}</strong></p>
+                  <p><span>TIPO:</span> <strong>{vehiculoSeleccionado.tipo}</strong></p>
+                  <p><span>CHASIS:</span> <strong>{vehiculoSeleccionado.numero_chasis}</strong></p>
+                  <p><span>MOTOR:</span> <strong>{vehiculoSeleccionado.numero_motor}</strong></p>
+                </div>
+                <div className="cedula-qr-contenedor">
+                  {/* Generamos el QR en vivo solo si el sistema no está "esperando" */}
+                  {vehiculoSeleccionado.marca !== "-" && (
+                    <QRCode 
+                      value={`DOMINIO: ${vehiculoSeleccionado.titulo === 'SIN REGISTRO EN SISTEMA' ? '-' : vehiculoSeleccionado.titulo}\nMARCA: ${vehiculoSeleccionado.marca}\nCHASIS: ${vehiculoSeleccionado.numero_chasis}\nMOTOR: ${vehiculoSeleccionado.numero_motor}\nTITULAR: ${vehiculoSeleccionado.titular_nombre}`} 
+                      size={70} 
+                      level="L"
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+            {/* DORSO DE LA CÉDULA */}
+            <div className="cedula-fisica dorso">
+              <div className="cedula-fondo-agua">DNRPA</div>
+              <div className="cedula-cabecera">
+                <p className="titulo-cedula" style={{textAlign: 'right'}}>IDENTIFICACIÓN DEL TITULAR</p>
+              </div>
+              <div className="cedula-datos">
+                <p><span>TITULAR:</span> <strong>{vehiculoSeleccionado.titular_nombre}</strong></p>
+                <p><span>D.N.I.:</span> <strong>{vehiculoSeleccionado.titular_dni}</strong></p>
+                <p><span>DOMICILIO:</span> <strong>ALDERETES - CRUZ ALTA, TUCUMÁN</strong></p>
+              </div>
+            </div>
+          </div>
+          {/* --- FIN DE LA CÉDULA TIPO DNRPA --- */}
             </div>
 
           </div>
