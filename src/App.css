@@ -538,8 +538,20 @@ body {
     print-color-adjust: exact !important;
   }
   
+  /* Ocultamos el menú y resto de app */
+  body * {
+    visibility: hidden;
+  }
+  .contenedor-impresion-masiva, .contenedor-impresion-masiva * {
+    visibility: visible;
+  }
+  
   /* 2. Acomodamos el listado para la hoja A4 */
   .contenedor-impresion-masiva {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
     display: flex;
     flex-wrap: wrap; 
     gap: 15px; 
@@ -559,12 +571,14 @@ body {
 
   /* 4. El diseño exacto de la tarjeta DNRPA física */
   .cedula-fisica {
+    position: relative !important; /* CLAVE: Fija los límites de la tarjeta */
     width: 8.5cm;
     height: 5.5cm;
-    border: 1px dashed #7f8c8d; /* Guía para la tijera */
+    border: 1px dashed #7f8c8d; 
     box-shadow: none !important;
     background: linear-gradient(135deg, #d2f1f8 0%, #a2def0 100%) !important;
     color: #000000 !important;
+    overflow: hidden !important;
   }
 
   .cedula-fisica * {
@@ -572,8 +586,19 @@ body {
     font-weight: bold !important;
   }
 
-  /* 5. BLINDAJE DEL QR: Cajita blanca forzada para que el escáner lo lea perfecto */
+  /* Hacemos que el texto solo ocupe el 70% del ancho para no pisar al QR */
+  .cedula-datos {
+    max-width: 70% !important;
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  /* 5. BLINDAJE DEL QR: Lo anclamos a la esquina inferior derecha a la fuerza */
   .cedula-qr-contenedor {
+    position: absolute !important;
+    bottom: 12px !important;
+    right: 12px !important;
+    z-index: 9999 !important; /* Lo trae al frente de TODO */
     background-color: #ffffff !important;
     width: 65px !important;
     height: 65px !important;
@@ -582,10 +607,10 @@ body {
     align-items: center !important;
     justify-content: center !important;
     border-radius: 4px;
-    border: 1px solid #000 !important; /* Bordecito negro para que resalte */
+    border: 1px solid #000 !important; 
   }
 
-  /* Forzamos al SVG (el dibujo del QR) a mostrarse sí o sí */
+  /* Forzamos al dibujo del QR a mostrarse sí o sí */
   .cedula-qr-contenedor svg {
     display: block !important;
     width: 100% !important;
