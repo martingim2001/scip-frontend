@@ -565,7 +565,15 @@ body {
   .cedula-fisica {
     width: 8.5cm;
     height: 5.5cm;
-    border: 1px dashed #7f8c8d; /* Guía de puntos para recortar con tijera */
+    border: 1px dashed #7f8c8d;
     box-shadow: none;
+    /* BLINDAJE CONTRA MODO OSCURO: */
+    background: linear-gradient(135deg, #d2f1f8 0%, #a2def0 100%) !important;
+    color: #000000 !important;
+  }
+  
+  /* Aseguramos que los textos internos también sean negros al imprimir */
+  .cedula-fisica * {
+    color: #000000 !important;
   }
 }
