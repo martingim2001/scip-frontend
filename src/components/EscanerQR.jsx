@@ -45,7 +45,7 @@ const EscanerQR = ({ onEscaneoExitoso }) => {
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // <--- ¡CLAVE: Queda vacío [] para que NO se reinicie en bucle!
+  }, []);
 
   return (
     <div className="contenedor-escaner" style={{ minHeight: '280px', display: 'flex', alignItems: 'center' }}>
