@@ -5,6 +5,7 @@ import Login from './components/Login';
 import QRCode from 'react-qr-code';
 import CedulaPrint from './components/CedulaPrint';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ImprimirTodas from './components/ImprimirTodas';
 import './App.css'
 
 function App() {
@@ -100,15 +101,16 @@ function App() {
   // 2. Panel Principal con Sistema de Rutas
 return (
   <Router>
-    <Routes>
-      {/* Ruta para la vista de impresión limpia */}
-      <Route path="/imprimir" element={<CedulaPrint />} />
+      <Routes>
+        {/* Las rutas de impresión van juntas arriba de todo */}
+        <Route path="/imprimir" element={<CedulaPrint />} />
+        <Route path="/imprimir-todas" element={<ImprimirTodas />} />
 
-      {/* Ruta principal del Dashboard */}
-      <Route 
-        path="/" 
-        element={
-          !usuarioLogueado ? (
+        {/* Y justo debajo viene la ruta principal del sistema */}
+        <Route 
+          path="/" 
+          element={
+            !usuarioLogueado ? (
             <Login onLoginExitoso={manejarLogin} />
           ) : (
             <div className="layout-principal">
@@ -239,6 +241,14 @@ return (
 >
   🖨️ GENERAR CÉDULA EN VENTANA NUEVA
 </button>
+{/* Botón para la impresión masiva de todo el lote */}
+          <button 
+            className="btn-imprimir" 
+            style={{ marginLeft: '10px', backgroundColor: '#006064' }} 
+            onClick={() => window.open('/imprimir-todas', '_blank')}
+          >
+            🖨️ IMPRIMIR TODO EL REGISTRO
+          </button>
             </div>
 
           </div>
