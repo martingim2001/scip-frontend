@@ -218,6 +218,13 @@ function App() {
             </div>
           </div>
           {/* --- FIN DE LA CÉDULA TIPO DNRPA --- */}
+          {/* Botón para imprimir la cédula física */}
+          <button 
+            className="btn-imprimir" 
+            onClick={() => window.print()}
+          >
+            🖨️ IMPRIMIR TARJETA FÍSICA
+          </button>
             </div>
 
           </div>
