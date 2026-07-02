@@ -632,10 +632,33 @@ body {
     color: #000000 !important;
   }
 
-  /* Forzamos al dibujo del QR a mostrarse sí o sí */
+  /* 5. BLINDAJE DEL QR: Bloqueo estricto de tamaño y posición */
+  .cedula-qr-contenedor {
+    position: absolute !important;
+    bottom: 10px !important;
+    right: 10px !important;
+    z-index: 9999 !important;
+    background-color: #ffffff !important;
+    width: 65px !important;
+    height: 65px !important;
+    max-width: 65px !important;  /* Freno de emergencia para el ancho */
+    max-height: 65px !important; /* Freno de emergencia para el alto */
+    padding: 3px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 4px;
+    border: 1px solid #000 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Obligamos al dibujo del QR a medir 60x60 píxeles exactos (nada de porcentajes) */
   .cedula-qr-contenedor svg {
     display: block !important;
-    width: 100% !important;
-    height: 100% !important;
+    width: 55px !important;  
+    height: 55px !important; 
+    max-width: 55px !important;
+    max-height: 55px !important;
+    object-fit: contain !important; /* Fuerza a mantener la proporción cuadrada */
   }
 }
