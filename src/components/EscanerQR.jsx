@@ -44,6 +44,7 @@ const EscanerQR = ({ onEscaneoExitoso }) => {
         });
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // <--- ¡CLAVE: Queda vacío [] para que NO se reinicie en bucle!
 
   return (
