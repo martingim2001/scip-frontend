@@ -13,6 +13,9 @@ function App() {
   const [fechaHora, setFechaHora] = useState(new Date());
   const [moduloActivo, setModuloActivo] = useState('vehiculos'); 
   const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState(null);
+  
+  // ⚡ NUEVO: Este contador obligará a la tabla de historial a refrescarse
+  const [historialTrigger, setHistorialTrigger] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => setFechaHora(new Date()), 1000);
@@ -48,6 +51,10 @@ function App() {
 
         setVehiculoSeleccionado(datos);
         localStorage.setItem('vehiculoParaImprimir', JSON.stringify(datos));
+        
+        // ⚡ NUEVO: Si la consulta fue exitosa, sumamos 1 para forzar el refresco del historial
+        setHistorialTrigger(prev => prev + 1);
+
       } else {
         alert('Error de conexión con el servidor.');
         setVehiculoSeleccionado(null);
@@ -98,7 +105,6 @@ function App() {
                       {vehiculoSeleccionado && (
                         <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
                           <div style={{ 
-                            /* ACÁ ESTÁ LA MAGIA: Ahora lee la palabra 'rojo' que manda el backend */
                             border: vehiculoSeleccionado.estado === 'rojo' ? '2px solid #e74c3c' : '2px solid #2ecc71',
                             padding: '20px', 
                             borderRadius: '10px', 
@@ -110,7 +116,6 @@ function App() {
                             boxShadow: '0 4px 8px rgba(0,0,0,0.5)'
                           }}>
                              <h2 style={{ color: vehiculoSeleccionado.estado === 'rojo' ? '#e74c3c' : '#2ecc71', marginBottom: '5px' }}>
-                               {/* Y acá muestra el título exacto: ROBO RECIENTE, SECUESTRO, etc. */}
                                {vehiculoSeleccionado.estado === 'rojo' ? `❌ ${vehiculoSeleccionado.titulo}` : '✅ SIN IMPEDIMENTOS'}
                              </h2>
                              <p style={{ fontSize: '11px', color: '#bdc3c7', marginBottom: '15px' }}>
@@ -139,7 +144,8 @@ function App() {
                         </div>
                       )}
                       
-                      <HistoryTable />
+                      {/* ⚡ CAMBIO ACÁ: Le agregamos la key vinculada al trigger para obligarla a actualizarse */}
+                      <HistoryTable key={historialTrigger} />
                     </div>
                   )}
 
