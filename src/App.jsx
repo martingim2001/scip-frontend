@@ -6,7 +6,7 @@ import QRCode from 'react-qr-code';
 import CedulaPrint from './components/CedulaPrint';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ImprimirTodas from './components/ImprimirTodas';
-//import ConsultaPersonas from './components/ConsultaPersonas';
+import ConsultaPersonas from './components/ConsultaPersonas';
 import './App.css'
 
 function App() {  // Estado de Autenticación: Guardará el objeto del usuario que devuelva la base de datos
