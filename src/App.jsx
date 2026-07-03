@@ -112,8 +112,10 @@ function App() {
         <div className="avatar-circulo">👤</div>
         <div className="info-agente">
           <span className="rol-agente">AGENTE</span>
-          {/* Agregamos el salvavidas por si el nombre viene vacío */}
-          <span className="nombre-agente">{usuarioLogueado.nombre_completo || 'Martín Giménez'} ▼</span>
+          <span className="nombre-agente">
+            {/* Buscamos en las dos posibles rutas y si falla todo, ponemos 'Operador' */}
+            {usuarioLogueado?.usuario?.nombre_completo || usuarioLogueado?.nombre_completo || 'Operador'} ▼
+          </span>
         </div>
       </div>
 
