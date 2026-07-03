@@ -9,19 +9,16 @@ import ConsultaPersonas from './components/ConsultaPersonas';
 import './App.css';
 
 function App() {
-  // --- 1. ESTADOS DE LA APLICACIÓN ---
   const [usuarioLogueado, setUsuarioLogueado] = useState(null);
   const [fechaHora, setFechaHora] = useState(new Date());
   const [moduloActivo, setModuloActivo] = useState('vehiculos'); 
   const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState(null);
 
-  // --- 2. RELOJ EN TIEMPO REAL ---
   useEffect(() => {
     const timer = setInterval(() => setFechaHora(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // --- 3. FUNCIONES DE LÓGICA ---
   const manejarLogin = (usuario) => {
     setUsuarioLogueado(usuario);
   };
@@ -29,15 +26,11 @@ function App() {
   const manejarBuscarVehiculo = async (patente) => {
     try {
       const patenteMayuscula = patente.toUpperCase();
-      
-      // Rescatamos el ID del agente de forma segura. Si algo falla, forzamos el 1 (tu usuario admin)
       const idAgente = usuarioLogueado?.id || usuarioLogueado?.usuario?.id || 1;
-
+      
       const respuesta = await fetch('https://scip-backend-yktr.onrender.com/api/vehiculos/consulta', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           dominio: patenteMayuscula,
           usuarioId: idAgente
@@ -56,7 +49,7 @@ function App() {
         setVehiculoSeleccionado(datos);
         localStorage.setItem('vehiculoParaImprimir', JSON.stringify(datos));
       } else {
-        alert('Error al buscar en el servidor.');
+        alert('Error de conexión con el servidor.');
         setVehiculoSeleccionado(null);
       }
     } catch (error) {
@@ -64,7 +57,6 @@ function App() {
     }
   };
 
-  // --- 4. RENDERIZADO VISUAL ---
   return (
     <Router>
       <Routes>
@@ -79,20 +71,13 @@ function App() {
             ) : (
               <div className="layout-principal">
                 
-                {/* --- BARRA LATERAL --- */}
                 <aside className="sidebar">
                   <h2 style={{ color: '#fff', marginBottom: '20px' }}>S.C.I.P.</h2>
                   <nav style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                    <p 
-                      onClick={() => setModuloActivo('vehiculos')}
-                      style={{ color: moduloActivo === 'vehiculos' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}
-                    >
+                    <p onClick={() => setModuloActivo('vehiculos')} style={{ color: moduloActivo === 'vehiculos' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}>
                       🚗 Consulta Vehículos
                     </p>
-                    <p 
-                      onClick={() => setModuloActivo('personas')}
-                      style={{ color: moduloActivo === 'personas' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}
-                    >
+                    <p onClick={() => setModuloActivo('personas')} style={{ color: moduloActivo === 'personas' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}>
                       👤 Consulta Personas
                     </p>
                     <p style={{ color: '#888', cursor: 'not-allowed' }}>📁 ABM Novedades</p>
@@ -100,24 +85,21 @@ function App() {
                   </nav>
                 </aside>
 
-                {/* --- CONTENIDO CENTRAL --- */}
                 <div className="contenedor-derecho">
-                  
                   <header className="cabecera-superior" style={{ display: 'flex', justifyContent: 'space-between', padding: '15px', borderBottom: '1px solid #34495e', color: 'white' }}>
                     <span>{fechaHora.toLocaleTimeString()}</span>
                     <span>Agente: <strong>{usuarioLogueado.nombre_completo || 'Martín Giménez'}</strong></span>
                   </header>
 
-                  {/* PANTALLA: VEHÍCULOS */}
                   {moduloActivo === 'vehiculos' && (
                     <div className="modulo-vehiculos" style={{ marginTop: '20px' }}>
                       <SearchPanel onBuscar={manejarBuscarVehiculo} />
                       
-                      {/* TARJETA VISUAL DEL VEHÍCULO RECUPERADA */}
                       {vehiculoSeleccionado && (
                         <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
                           <div style={{ 
-                            border: vehiculoSeleccionado.estado === 'Robado' ? '2px solid #e74c3c' : '2px solid #2ecc71',
+                            /* ACÁ ESTÁ LA MAGIA: Ahora lee la palabra 'rojo' que manda el backend */
+                            border: vehiculoSeleccionado.estado === 'rojo' ? '2px solid #e74c3c' : '2px solid #2ecc71',
                             padding: '20px', 
                             borderRadius: '10px', 
                             backgroundColor: '#1a252f',
@@ -127,8 +109,9 @@ function App() {
                             textAlign: 'center',
                             boxShadow: '0 4px 8px rgba(0,0,0,0.5)'
                           }}>
-                             <h2 style={{ color: vehiculoSeleccionado.estado === 'Robado' ? '#e74c3c' : '#2ecc71', marginBottom: '5px' }}>
-                               {vehiculoSeleccionado.estado === 'Robado' ? '❌ SECUESTRO ACTIVO' : '✅ SIN IMPEDIMENTOS'}
+                             <h2 style={{ color: vehiculoSeleccionado.estado === 'rojo' ? '#e74c3c' : '#2ecc71', marginBottom: '5px' }}>
+                               {/* Y acá muestra el título exacto: ROBO RECIENTE, SECUESTRO, etc. */}
+                               {vehiculoSeleccionado.estado === 'rojo' ? `❌ ${vehiculoSeleccionado.titulo}` : '✅ SIN IMPEDIMENTOS'}
                              </h2>
                              <p style={{ fontSize: '11px', color: '#bdc3c7', marginBottom: '15px' }}>
                                DNRPA - CÉDULA DE IDENTIFICACIÓN
@@ -160,13 +143,11 @@ function App() {
                     </div>
                   )}
 
-                  {/* PANTALLA: PERSONAS */}
                   {moduloActivo === 'personas' && (
                     <div className="modulo-personas" style={{ marginTop: '20px' }}>
                       <ConsultaPersonas />
                     </div>
                   )}
-
                 </div>
               </div>
             )
