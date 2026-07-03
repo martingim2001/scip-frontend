@@ -540,3 +540,27 @@ body {
     overflow: visible;
   }
 }
+/* ==========================================
+   BOTONES DEL MENÚ LATERAL (IMPRESIONES)
+========================================== */
+.btn-sidebar-print {
+  background-color: #1a252f;
+  color: #bdc3c7;
+  border: 1px solid #34495e;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+  text-align: left;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-sidebar-print:hover {
+  background-color: #3498db;
+  color: #ffffff;
+  border-color: #3498db;
+}

@@ -15,6 +15,7 @@ function App() {
   const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState(null);
   const [historialTrigger, setHistorialTrigger] = useState(0);
   const [menuPerfilAbierto, setMenuPerfilAbierto] = useState(false);
+  const [menuImpresionAbierto, setMenuImpresionAbierto] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => setFechaHora(new Date()), 1000);
@@ -78,18 +79,37 @@ function App() {
               <div className="layout-principal">
                 
                 <aside className="sidebar">
-                  <h2 style={{ color: '#fff', marginBottom: '20px' }}>S.C.I.P.</h2>
-                  <nav style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                    <p onClick={() => setModuloActivo('vehiculos')} style={{ color: moduloActivo === 'vehiculos' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}>
-                      🚗 Consulta Vehículos
-                    </p>
-                    <p onClick={() => setModuloActivo('personas')} style={{ color: moduloActivo === 'personas' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}>
-                      👤 Consulta Personas
-                    </p>
-                    <p style={{ color: '#888', cursor: 'not-allowed' }}>📁 ABM Novedades</p>
-                    <p style={{ color: '#888', cursor: 'not-allowed' }}>📊 Auditoría</p>
-                  </nav>
-                </aside>
+  <h2 style={{ color: '#fff', marginBottom: '20px' }}>S.C.I.P.</h2>
+  <nav style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+    <p onClick={() => setModuloActivo('vehiculos')} style={{ color: moduloActivo === 'vehiculos' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}>
+      🚗 Consulta Vehículos
+    </p>
+    <p onClick={() => setModuloActivo('personas')} style={{ color: moduloActivo === 'personas' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}>
+      👤 Consulta Personas
+    </p>
+    
+    {/* NUEVO: Menú desplegable de impresiones */}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <p onClick={() => setMenuImpresionAbierto(!menuImpresionAbierto)} style={{ color: '#888', fontWeight: 'bold', cursor: 'pointer' }}>
+        🖨️ Impresión Tarjeta <span style={{ float: 'right', fontSize: '10px', marginTop: '4px' }}>{menuImpresionAbierto ? '▲' : '▼'}</span>
+      </p>
+      
+      {menuImpresionAbierto && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', paddingLeft: '15px', marginTop: '5px' }}>
+          <button onClick={() => window.open('/imprimir', '_blank')} className="btn-sidebar-print">
+            📄 Imprimir Cédula
+          </button>
+          <button onClick={() => window.open('/imprimir-todas', '_blank')} className="btn-sidebar-print">
+            📑 Imprimir Registro
+          </button>
+        </div>
+      )}
+    </div>
+
+    <p style={{ color: '#888', cursor: 'not-allowed' }}>📁 ABM Novedades</p>
+    <p style={{ color: '#888', cursor: 'not-allowed' }}>📊 Auditoría</p>
+  </nav>
+</aside>
 
                 <div className="contenedor-derecho">
                 <header className="cabecera-superior">
@@ -176,14 +196,6 @@ function App() {
                                <p><strong>TITULAR:</strong> {vehiculoSeleccionado.titular_nombre}</p>
                              </div>
               
-                             <div style={{ marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                <button onClick={() => window.open('/imprimir', '_blank')} style={{ padding: '10px', backgroundColor: '#3498db', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', fontWeight: 'bold' }}>
-                                  🖨️ IMPRIMIR CÉDULA
-                                </button>
-                                <button onClick={() => window.open('/imprimir-todas', '_blank')} style={{ padding: '10px', backgroundColor: '#006064', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', fontWeight: 'bold' }}>
-                                  🖨️ IMPRIMIR REGISTRO
-                                </button>
-                             </div>
                           </div>
                         </div>
                       )}
