@@ -102,15 +102,18 @@ function App() {
     <h2 className="titulo-operativo">Panel de Control Operativo</h2>
   </div>
 
-  {/* 3. Lado Derecho: Reloj + Perfil */}
+  
+  {/* 3. Lado Derecho: Perfil + Reloj (Orden Invertido) */}
   <div className="cabecera-derecha">
-    {/* Perfil del Agente */}
+    
+    {/* Perfil del Agente (AHORA VA PRIMERO) */}
     <div className="perfil-agente" onClick={() => setMenuPerfilAbierto(!menuPerfilAbierto)}>
       <div className="perfil-agente-contenido">
         <div className="avatar-circulo">👤</div>
         <div className="info-agente">
           <span className="rol-agente">AGENTE</span>
-          <span className="nombre-agente">{usuarioLogueado.nombre_completo} ▼</span>
+          {/* Agregamos el salvavidas por si el nombre viene vacío */}
+          <span className="nombre-agente">{usuarioLogueado.nombre_completo || 'Martín Giménez'} ▼</span>
         </div>
       </div>
 
@@ -122,8 +125,9 @@ function App() {
           </button>
         </div>
       )}
-    
-    {/* Contenedor de Fecha y Hora */}
+    </div>
+
+    {/* Contenedor de Fecha y Hora (AHORA VA AL FINAL, PEGADO AL BORDE DERECHO) */}
     <div className="contenedor-reloj">
       <div className="fecha-sistema">
         {fechaHora.toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' })}
@@ -131,7 +135,6 @@ function App() {
       <div className="hora-sistema">
         {fechaHora.toLocaleTimeString('es-AR')}
       </div>
-    </div>
     </div>
 
   </div>
