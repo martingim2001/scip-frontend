@@ -564,3 +564,58 @@ body {
   color: #ffffff;
   border-color: #3498db;
 }
+/* ==========================================
+   PANTALLA DE INICIO (MENÚ CENTRAL)
+========================================== */
+.menu-inicio-contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 80px); /* Ocupa el alto de la pantalla menos la cabecera */
+  padding: 20px;
+}
+
+.tarjetas-inicio-grid {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.tarjeta-inicio {
+  background-color: #121418;
+  border: 1px solid #1e3a5f;
+  border-radius: 12px;
+  padding: 50px 30px;
+  width: 320px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.tarjeta-inicio:hover {
+  background-color: #1a252f;
+  border-color: #3498db;
+  transform: translateY(-8px);
+  box-shadow: 0 15px 25px rgba(52, 152, 219, 0.2);
+}
+
+.icono-tarjeta {
+  font-size: 70px;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+}
+
+.tarjeta-inicio h3 {
+  color: #ffffff;
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.tarjeta-inicio p {
+  color: #888;
+  font-size: 14px;
+  line-height: 1.6;
+}

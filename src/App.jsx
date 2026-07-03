@@ -11,7 +11,7 @@ import './App.css';
 function App() {
   const [usuarioLogueado, setUsuarioLogueado] = useState(null);
   const [fechaHora, setFechaHora] = useState(new Date());
-  const [moduloActivo, setModuloActivo] = useState('vehiculos'); 
+  const [moduloActivo, setModuloActivo] = useState('inicio');
   const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState(null);
   const [historialTrigger, setHistorialTrigger] = useState(0);
   const [menuPerfilAbierto, setMenuPerfilAbierto] = useState(false);
@@ -81,6 +81,9 @@ function App() {
                 <aside className="sidebar">
   <h2 style={{ color: '#fff', marginBottom: '20px' }}>S.C.I.P.</h2>
   <nav style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+    <p onClick={() => setModuloActivo('inicio')} style={{ color: moduloActivo === 'inicio' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}>
+    🏠 Panel Principal
+  </p>
     <p onClick={() => setModuloActivo('vehiculos')} style={{ color: moduloActivo === 'vehiculos' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}>
       🚗 Consulta Vehículos
     </p>
@@ -161,6 +164,9 @@ function App() {
 
   </div>
 </header>
+<p onClick={() => setModuloActivo('inicio')} style={{ color: moduloActivo === 'inicio' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}>
+    🏠 Panel Principal
+  </p>
 
                   {moduloActivo === 'vehiculos' && (
                     <div className="modulo-vehiculos" style={{ marginTop: '20px' }}>
