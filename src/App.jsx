@@ -93,10 +93,28 @@ function App() {
                 </aside>
 
                 <div className="contenedor-derecho">
-                  <header className="cabecera-superior" style={{ display: 'flex', justifyContent: 'space-between', padding: '15px', borderBottom: '1px solid #34495e', color: 'white' }}>
-                    <span>{fechaHora.toLocaleTimeString()}</span>
-                    <span>Agente: <strong>{usuarioLogueado.nombre_completo || 'Martín Giménez'}</strong></span>
-                  </header>
+                 <header className="cabecera-superior" style={{ display: 'flex', justifyContent: 'space-between', padding: '15px', borderBottom: '1px solid #34495e', color: 'white', alignItems: 'center' }}>
+  <span>{fechaHora.toLocaleTimeString()}</span>
+  
+  {/* Agregamos el botón de cerrar sesión */}
+  <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+    <span>Agente: <strong>{usuarioLogueado.nombre_completo || 'Martín Giménez'}</strong></span>
+    <button 
+      onClick={() => setUsuarioLogueado(null)} // Esto resetea el usuario y te saca del sistema
+      style={{
+        backgroundColor: '#e74c3c',
+        color: 'white',
+        border: 'none',
+        padding: '5px 10px',
+        borderRadius: '5px',
+        cursor: 'pointer',
+        fontSize: '12px'
+      }}
+    >
+      Cerrar Sesión
+    </button>
+  </div>
+</header>
 
                   {moduloActivo === 'vehiculos' && (
                     <div className="modulo-vehiculos" style={{ marginTop: '20px' }}>
