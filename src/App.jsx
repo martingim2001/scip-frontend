@@ -93,31 +93,48 @@ function App() {
 
                 <div className="contenedor-derecho">
                 <header className="cabecera-superior">
-  <span>{fechaHora.toLocaleTimeString()}</span>
+  
+  {/* 1. Espacio izquierdo (para balancear el diseño) */}
+  <div className="cabecera-espaciador"></div>
 
-  {/* Contenedor del perfil con el diseño de Panel de Control Operativo */}
-  <div className="perfil-agente" onClick={() => setMenuPerfilAbierto(!menuPerfilAbierto)}>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-      {/* Ícono de usuario */}
-      <div style={{ backgroundColor: '#2a303c', borderRadius: '50%', width: '35px', height: '35px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        👤
+  {/* 2. Título Central Absoluto */}
+  <div className="cabecera-centro">
+    <h2 className="titulo-operativo">Panel de Control Operativo</h2>
+  </div>
+
+  {/* 3. Lado Derecho: Reloj + Perfil */}
+  <div className="cabecera-derecha">
+    
+    {/* Contenedor de Fecha y Hora */}
+    <div className="contenedor-reloj">
+      <div className="fecha-sistema">
+        {fechaHora.toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' })}
       </div>
-      {/* Nombre y Rol */}
-      <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
-        <span style={{ fontSize: '10px', color: '#3498db', fontWeight: 'bold' }}>AGENTE</span>
-        <span style={{ fontSize: '13px', fontWeight: 'bold' }}>{usuarioLogueado.nombre_completo} ▼</span>
+      <div className="hora-sistema">
+        {fechaHora.toLocaleTimeString('es-AR')}
       </div>
     </div>
 
-    {/* Menú desplegable */}
-    {menuPerfilAbierto && (
-      <div className="menu-desplegable">
-        <p style={{ margin: '0 0 10px 0', fontSize: '12px', color: '#888' }}>Panel de Control Operativo</p>
-        <button className="btn-cerrar-sesion" onClick={() => setUsuarioLogueado(null)}>
-          Cerrar Sesión
-        </button>
+    {/* Perfil del Agente */}
+    <div className="perfil-agente" onClick={() => setMenuPerfilAbierto(!menuPerfilAbierto)}>
+      <div className="perfil-agente-contenido">
+        <div className="avatar-circulo">👤</div>
+        <div className="info-agente">
+          <span className="rol-agente">AGENTE</span>
+          <span className="nombre-agente">{usuarioLogueado.nombre_completo} ▼</span>
+        </div>
       </div>
-    )}
+
+      {/* Menú Desplegable */}
+      {menuPerfilAbierto && (
+        <div className="menu-desplegable">
+          <button className="btn-cerrar-sesion" onClick={() => setUsuarioLogueado(null)}>
+            Cerrar Sesión
+          </button>
+        </div>
+      )}
+    </div>
+
   </div>
 </header>
 
