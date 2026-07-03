@@ -145,21 +145,24 @@ return (
       {/* SECCIÓN DE CONTENIDO DERECHO */}
       <div className="contenedor-derecho">
         {/* CABECERA SUPERIOR */}
-        {/* 1. AGREGAS EL MÓDULO DE INICIO */}
+        {/* 1. MÓDULO DE INICIO */}
           {moduloActivo === 'inicio' && (
             <h2 style={{marginTop: '20px', textAlign: 'center'}}>Bienvenido al S.C.I.P. Seleccione un módulo.</h2>
           )}
 
-          {/* 2. ENVUELVES TU CÓDIGO DE VEHÍCULOS */}
+          {/* 2. MÓDULO DE VEHÍCULOS */}
           {moduloActivo === 'vehiculos' && (
             <div className="modulo-vehiculos">
-               
-               {/* ⚠️ ACÁ ADENTRO TIENE QUE QUEDAR TU CÓDIGO ORIGINAL ⚠️ */}
-               {/* <SearchPanel onBuscar={...} /> */}
-               {/* <div className="cedula-fisica"> ... </div> */}
-               {/* Todo lo que ya tenías de los autos queda acá adentro */}
-
+               {/* Quitamos los comentarios para que el buscador funcione de nuevo */}
+               <SearchPanel /> 
             </div>
+          )}
+
+          {/* 3. MÓDULO DE PERSONAS (Esto soluciona el error rojo y activa el botón) */}
+          {moduloActivo === 'personas' && (
+             <div className="modulo-personas">
+               <ConsultaPersonas />
+             </div>
           )}
         
         <header className="topbar">
