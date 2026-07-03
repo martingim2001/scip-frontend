@@ -28,16 +28,34 @@ function App() {
 
   const manejarBuscarVehiculo = async (patente) => {
     try {
-      // MAGIA: Forzamos a que siempre busque en mayúsculas para evitar el error 404
       const patenteMayuscula = patente.toUpperCase();
       
-      const respuesta = await fetch(`https://scip-backend-yktr.onrender.com/api/vehiculos/${patenteMayuscula}`);
+      // Hacemos un POST a /consulta enviando la patente y el ID del agente
+      const respuesta = await fetch('https://scip-backend-yktr.onrender.com/api/vehiculos/consulta', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          dominio: patenteMayuscula,
+          usuarioId: usuarioLogueado ? usuarioLogueado.id : 1 // Mandamos el ID para tu auditoría
+        })
+      });
+
       if (respuesta.ok) {
         const datos = await respuesta.json();
+        
+        // Como tu backend devuelve "encontrado: false" si no existe, lo atajamos acá:
+        if (datos.encontrado === false) {
+           alert('Vehículo no encontrado en la base de datos.');
+           setVehiculoSeleccionado(null);
+           return;
+        }
+
         setVehiculoSeleccionado(datos);
         localStorage.setItem('vehiculoParaImprimir', JSON.stringify(datos));
       } else {
-        alert('Vehículo no encontrado en la base de datos.');
+        alert('Error de conexión con el servidor.');
         setVehiculoSeleccionado(null);
       }
     } catch (error) {
