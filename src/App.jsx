@@ -104,17 +104,6 @@ function App() {
 
   {/* 3. Lado Derecho: Reloj + Perfil */}
   <div className="cabecera-derecha">
-    
-    {/* Contenedor de Fecha y Hora */}
-    <div className="contenedor-reloj">
-      <div className="fecha-sistema">
-        {fechaHora.toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' })}
-      </div>
-      <div className="hora-sistema">
-        {fechaHora.toLocaleTimeString('es-AR')}
-      </div>
-    </div>
-
     {/* Perfil del Agente */}
     <div className="perfil-agente" onClick={() => setMenuPerfilAbierto(!menuPerfilAbierto)}>
       <div className="perfil-agente-contenido">
@@ -133,6 +122,16 @@ function App() {
           </button>
         </div>
       )}
+    
+    {/* Contenedor de Fecha y Hora */}
+    <div className="contenedor-reloj">
+      <div className="fecha-sistema">
+        {fechaHora.toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' })}
+      </div>
+      <div className="hora-sistema">
+        {fechaHora.toLocaleTimeString('es-AR')}
+      </div>
+    </div>
     </div>
 
   </div>
