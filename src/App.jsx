@@ -28,13 +28,16 @@ function App() {
 
   const manejarBuscarVehiculo = async (patente) => {
     try {
-      const respuesta = await fetch(`https://scip-backend-yktr.onrender.com/api/vehiculos/${patente}`);
+      // MAGIA: Forzamos a que siempre busque en mayúsculas para evitar el error 404
+      const patenteMayuscula = patente.toUpperCase();
+      
+      const respuesta = await fetch(`https://scip-backend-yktr.onrender.com/api/vehiculos/${patenteMayuscula}`);
       if (respuesta.ok) {
         const datos = await respuesta.json();
         setVehiculoSeleccionado(datos);
         localStorage.setItem('vehiculoParaImprimir', JSON.stringify(datos));
       } else {
-        alert('Vehículo no encontrado');
+        alert('Vehículo no encontrado en la base de datos.');
         setVehiculoSeleccionado(null);
       }
     } catch (error) {
@@ -46,11 +49,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* RUTAS DE IMPRESIÓN (Ocultas del menú principal) */}
         <Route path="/imprimir" element={<CedulaPrint />} />
         <Route path="/imprimir-todas" element={<ImprimirTodas />} />
 
-        {/* RUTA PRINCIPAL (La pantalla del sistema) */}
         <Route 
           path="/" 
           element={
@@ -59,7 +60,7 @@ function App() {
             ) : (
               <div className="layout-principal">
                 
-                {/* --- BARRA LATERAL (SIDEBAR) --- */}
+                {/* --- BARRA LATERAL --- */}
                 <aside className="sidebar">
                   <h2 style={{ color: '#fff', marginBottom: '20px' }}>S.C.I.P.</h2>
                   <nav style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
@@ -83,33 +84,55 @@ function App() {
                 {/* --- CONTENIDO CENTRAL --- */}
                 <div className="contenedor-derecho">
                   
-                  {/* CABECERA (Reloj y Usuario) */}
                   <header className="cabecera-superior" style={{ display: 'flex', justifyContent: 'space-between', padding: '15px', borderBottom: '1px solid #34495e', color: 'white' }}>
                     <span>{fechaHora.toLocaleTimeString()}</span>
-                    <span>Agente: <strong>{usuarioLogueado.nombre || 'Agente'}</strong></span>
+                    <span>Agente: <strong>{usuarioLogueado.nombre_completo || 'Martín Giménez'}</strong></span>
                   </header>
 
-                  {/* === PANTALLAS DINÁMICAS (Cambian según el menú) === */}
-                  
                   {/* PANTALLA: VEHÍCULOS */}
                   {moduloActivo === 'vehiculos' && (
                     <div className="modulo-vehiculos" style={{ marginTop: '20px' }}>
                       <SearchPanel onBuscar={manejarBuscarVehiculo} />
                       
+                      {/* TARJETA VISUAL DEL VEHÍCULO RECUPERADA */}
                       {vehiculoSeleccionado && (
-                        <div className="resultado-consulta" style={{ marginTop: '20px', padding: '15px', backgroundColor: '#2c3e50', borderRadius: '8px' }}>
-                          <p style={{ color: '#fff' }}>Vehículo seleccionado listo para procesar.</p>
-                          <div style={{ marginTop: '15px' }}>
-                            <button className="btn-imprimir" onClick={() => window.open('/imprimir', '_blank')}>
-                              🖨️ IMPRIMIR CÉDULA ACTUAL
-                            </button>
-                            <button 
-                              className="btn-imprimir" 
-                              style={{ marginLeft: '10px', backgroundColor: '#006064', color: 'white' }} 
-                              onClick={() => window.open('/imprimir-todas', '_blank')}
-                            >
-                              🖨️ IMPRIMIR TODO EL REGISTRO
-                            </button>
+                        <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
+                          <div style={{ 
+                            border: vehiculoSeleccionado.estado === 'Robado' ? '2px solid #e74c3c' : '2px solid #2ecc71',
+                            padding: '20px', 
+                            borderRadius: '10px', 
+                            backgroundColor: '#1a252f',
+                            color: 'white',
+                            width: '100%',
+                            maxWidth: '350px',
+                            textAlign: 'center',
+                            boxShadow: '0 4px 8px rgba(0,0,0,0.5)'
+                          }}>
+                             <h2 style={{ color: vehiculoSeleccionado.estado === 'Robado' ? '#e74c3c' : '#2ecc71', marginBottom: '5px' }}>
+                               {vehiculoSeleccionado.estado === 'Robado' ? '❌ SECUESTRO ACTIVO' : '✅ SIN IMPEDIMENTOS'}
+                             </h2>
+                             <p style={{ fontSize: '11px', color: '#bdc3c7', marginBottom: '15px' }}>
+                               DNRPA - CÉDULA DE IDENTIFICACIÓN
+                             </p>
+                             
+                             <div style={{ textAlign: 'left', lineHeight: '1.6', fontSize: '14px', borderTop: '1px solid #34495e', borderBottom: '1px solid #34495e', padding: '15px 0' }}>
+                               <p><strong>DOMINIO:</strong> {vehiculoSeleccionado.dominio}</p>
+                               <p><strong>MARCA:</strong> {vehiculoSeleccionado.marca}</p>
+                               <p><strong>MODELO:</strong> {vehiculoSeleccionado.modelo}</p>
+                               <p><strong>TIPO:</strong> {vehiculoSeleccionado.tipo}</p>
+                               <p><strong>CHASIS:</strong> {vehiculoSeleccionado.numero_chasis || vehiculoSeleccionado.chasis}</p>
+                               <p><strong>MOTOR:</strong> {vehiculoSeleccionado.numero_motor || vehiculoSeleccionado.motor}</p>
+                               <p><strong>TITULAR:</strong> {vehiculoSeleccionado.titular_nombre}</p>
+                             </div>
+              
+                             <div style={{ marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                <button onClick={() => window.open('/imprimir', '_blank')} style={{ padding: '10px', backgroundColor: '#3498db', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', fontWeight: 'bold' }}>
+                                  🖨️ IMPRIMIR CÉDULA
+                                </button>
+                                <button onClick={() => window.open('/imprimir-todas', '_blank')} style={{ padding: '10px', backgroundColor: '#006064', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', fontWeight: 'bold' }}>
+                                  🖨️ IMPRIMIR REGISTRO
+                                </button>
+                             </div>
                           </div>
                         </div>
                       )}
