@@ -30,7 +30,9 @@ function App() {
     try {
       const patenteMayuscula = patente.toUpperCase();
       
-      // Hacemos un POST a /consulta enviando la patente y el ID del agente
+      // Rescatamos el ID del agente de forma segura. Si algo falla, forzamos el 1 (tu usuario admin)
+      const idAgente = usuarioLogueado?.id || usuarioLogueado?.usuario?.id || 1;
+
       const respuesta = await fetch('https://scip-backend-yktr.onrender.com/api/vehiculos/consulta', {
         method: 'POST',
         headers: {
@@ -38,14 +40,13 @@ function App() {
         },
         body: JSON.stringify({
           dominio: patenteMayuscula,
-          usuarioId: usuarioLogueado ? usuarioLogueado.id : 1 // Mandamos el ID para tu auditoría
+          usuarioId: idAgente
         })
       });
 
       if (respuesta.ok) {
         const datos = await respuesta.json();
         
-        // Como tu backend devuelve "encontrado: false" si no existe, lo atajamos acá:
         if (datos.encontrado === false) {
            alert('Vehículo no encontrado en la base de datos.');
            setVehiculoSeleccionado(null);
@@ -55,7 +56,7 @@ function App() {
         setVehiculoSeleccionado(datos);
         localStorage.setItem('vehiculoParaImprimir', JSON.stringify(datos));
       } else {
-        alert('Error de conexión con el servidor.');
+        alert('Error al buscar en el servidor.');
         setVehiculoSeleccionado(null);
       }
     } catch (error) {
