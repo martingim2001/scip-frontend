@@ -1,301 +1,137 @@
 import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SearchPanel from './components/SearchPanel';
 import HistoryTable from './components/HistoryTable';
 import Login from './components/Login';
-import QRCode from 'react-qr-code';
 import CedulaPrint from './components/CedulaPrint';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ImprimirTodas from './components/ImprimirTodas';
 import ConsultaPersonas from './components/ConsultaPersonas';
-import './App.css'
+import './App.css';
 
-function App() {  // Estado de Autenticación: Guardará el objeto del usuario que devuelva la base de datos
+function App() {
+  // --- 1. ESTADOS DE LA APLICACIÓN ---
   const [usuarioLogueado, setUsuarioLogueado] = useState(null);
-
-  // Estado del Reloj en Tiempo Real
   const [fechaHora, setFechaHora] = useState(new Date());
+  const [moduloActivo, setModuloActivo] = useState('vehiculos'); 
+  const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState(null);
 
-  const [moduloActivo, setModuloActivo] = useState('inicio');
-
-  // Estado del Vehículo Activo en Pantalla (Inicia con un estado de espera)
-  const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState({
-    estado: "gris",
-    titulo: "ESPERANDO CONSULTA",
-    marca: "-",
-    modelo: "-",
-    anio: "-",
-    tipo: "-",
-    color: "-",
-    titular_nombre: "-",
-    titular_dni: "-",
-    domicilio: "-",
-    numero_chasis: "-",
-    numero_motor: "-",
-    icono: "🔍"
-});
-  // Estado para controlar si el menú del perfil está abierto o cerrado
-  const [menuPerfilAbierto, setMenuPerfilAbierto] = useState(false);
-
-  // Efecto para hacer correr el reloj segundo a segundo
+  // --- 2. RELOJ EN TIEMPO REAL ---
   useEffect(() => {
-    const temporizador = setInterval(() => setFechaHora(new Date()), 1000);
-    return () => clearInterval(temporizador);
+    const timer = setInterval(() => setFechaHora(new Date()), 1000);
+    return () => clearInterval(timer);
   }, []);
 
-  // Formateadores de fecha y hora para la región de Argentina
-  const fechaFormateada = fechaHora.toLocaleDateString('es-AR', {
-    weekday: 'long', 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric'
-  });
-  const horaFormateada = fechaHora.toLocaleTimeString('es-AR');
-
-  // Lógica para realizar la búsqueda conectada al Backend
-  const realizarBusqueda = async (patenteIngresada) => {
-    try {
-      const respuesta = await fetch('https://scip-backend-yktr.onrender.com/api/vehiculos/consulta', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          dominio: patenteIngresada, 
-          usuarioId: usuarioLogueado.id // Envía el ID del usuario logueado para la auditoría
-        })
-      });
-
-      const datos = await respuesta.json();
-      setVehiculoSeleccionado(datos);
-    } catch (error) {
-      console.error("Error al consultar el backend:", error);
-    }
+  // --- 3. FUNCIONES DE LÓGICA ---
+  const manejarLogin = (usuario) => {
+    setUsuarioLogueado(usuario);
   };
 
-  // Lógica para procesar el inicio de sesión con la Base de Datos
-  const manejarLogin = async (datosCredenciales) => {
+  const manejarBuscarVehiculo = async (patente) => {
     try {
-      const respuesta = await fetch('https://scip-backend-yktr.onrender.com/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(datosCredenciales)
-      });
-
-      // Si el servidor responde con un error interno (ej: error de sintaxis SQL)
-      if (!respuesta.ok) {
-        const errorServidor = await respuesta.json();
-        alert(`Error del servidor: ${errorServidor.mensaje}`);
-        return;
-      }
-
-      const resultado = await respuesta.json();
-
-      if (resultado.loginExitoso) {
-        setUsuarioLogueado(resultado.usuario); 
+      const respuesta = await fetch(`https://scip-backend-yktr.onrender.com/api/vehiculos/${patente}`);
+      if (respuesta.ok) {
+        const datos = await respuesta.json();
+        setVehiculoSeleccionado(datos);
+        localStorage.setItem('vehiculoParaImprimir', JSON.stringify(datos));
       } else {
-        alert(resultado.mensaje || "Credenciales incorrectas");
+        alert('Vehículo no encontrado');
+        setVehiculoSeleccionado(null);
       }
     } catch (error) {
-      console.error("Error en la conexión con el servidor de login:", error);
-      // Esta alerta saltará inmediatamente si el backend de Node.js está apagado
-      alert("No se pudo establecer conexión con el servidor operativo. Verifica que el backend esté encendido en el puerto 5000.");
+      console.error("Error al buscar vehículo:", error);
     }
   };
 
-  // 2. Panel Principal con Sistema de Rutas
-return (
-  <Router>
+  // --- 4. RENDERIZADO VISUAL ---
+  return (
+    <Router>
       <Routes>
-        {/* Las rutas de impresión van juntas arriba de todo */}
+        {/* RUTAS DE IMPRESIÓN (Ocultas del menú principal) */}
         <Route path="/imprimir" element={<CedulaPrint />} />
         <Route path="/imprimir-todas" element={<ImprimirTodas />} />
 
-        {/* Y justo debajo viene la ruta principal del sistema */}
+        {/* RUTA PRINCIPAL (La pantalla del sistema) */}
         <Route 
           path="/" 
           element={
             !usuarioLogueado ? (
-            <Login onLoginExitoso={manejarLogin} />
-          ) : (
-            <div className="layout-principal">
-      {/* BARRA LATERAL IZQUIERDA */}
-      <aside className="sidebar">
-        <h2 style={{ color: '#fff', marginBottom: '20px' }}>S.C.I.P.</h2>
-        <nav style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-            {/* Botón para ir a Vehículos */}
-            <p 
-              onClick={() => setModuloActivo('vehiculos')}
-              style={{ color: moduloActivo === 'vehiculos' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}
-            >
-              🚗 Consulta Vehículos
-            </p>
+              <Login onLoginExitoso={manejarLogin} />
+            ) : (
+              <div className="layout-principal">
+                
+                {/* --- BARRA LATERAL (SIDEBAR) --- */}
+                <aside className="sidebar">
+                  <h2 style={{ color: '#fff', marginBottom: '20px' }}>S.C.I.P.</h2>
+                  <nav style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                    <p 
+                      onClick={() => setModuloActivo('vehiculos')}
+                      style={{ color: moduloActivo === 'vehiculos' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}
+                    >
+                      🚗 Consulta Vehículos
+                    </p>
+                    <p 
+                      onClick={() => setModuloActivo('personas')}
+                      style={{ color: moduloActivo === 'personas' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}
+                    >
+                      👤 Consulta Personas
+                    </p>
+                    <p style={{ color: '#888', cursor: 'not-allowed' }}>📁 ABM Novedades</p>
+                    <p style={{ color: '#888', cursor: 'not-allowed' }}>📊 Auditoría</p>
+                  </nav>
+                </aside>
 
-            {/* Botón para ir a Personas */}
-            <p 
-              onClick={() => setModuloActivo('personas')}
-              style={{ color: moduloActivo === 'personas' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}
-            >
-              👤 Consulta Personas
-            </p>
+                {/* --- CONTENIDO CENTRAL --- */}
+                <div className="contenedor-derecho">
+                  
+                  {/* CABECERA (Reloj y Usuario) */}
+                  <header className="cabecera-superior" style={{ display: 'flex', justifyContent: 'space-between', padding: '15px', borderBottom: '1px solid #34495e', color: 'white' }}>
+                    <span>{fechaHora.toLocaleTimeString()}</span>
+                    <span>Agente: <strong>{usuarioLogueado.nombre || 'Agente'}</strong></span>
+                  </header>
 
-            {/* Los que están en desarrollo */}
-            <p style={{ color: '#888', cursor: 'not-allowed' }}>📁 ABM Novedades</p>
-            <p style={{ color: '#888', cursor: 'not-allowed' }}>📊 Auditoría</p>
-          </nav>
-      </aside>
-
-      {/* SECCIÓN DE CONTENIDO DERECHO */}
-      <div className="contenedor-derecho">
-        {/* CABECERA SUPERIOR */}
-        {/* 1. MÓDULO DE INICIO */}
-          {moduloActivo === 'inicio' && (
-            <h2 style={{marginTop: '20px', textAlign: 'center'}}>Bienvenido al S.C.I.P. Seleccione un módulo.</h2>
-          )}
-
-          {/* 2. MÓDULO DE VEHÍCULOS */}
-          {moduloActivo === 'vehiculos' && (
-            <div className="modulo-vehiculos">
-               {/* Quitamos los comentarios para que el buscador funcione de nuevo */}
-               <SearchPanel /> 
-            </div>
-          )}
-
-          {/* 3. MÓDULO DE PERSONAS (Esto soluciona el error rojo y activa el botón) */}
-          {moduloActivo === 'personas' && (
-             <div className="modulo-personas">
-               <ConsultaPersonas />
-             </div>
-          )}
-        
-        <header className="topbar">
-          
-          <div className="topbar-titulo">
-            <p>Panel de Control Operativo</p>
-          </div>
-
-          <div className="topbar-info">
-            
-            {/* 1. INFORMACIÓN DEL PERFIL Y MENÚ DESPLEGABLE */}
-            <div className="perfil-usuario-contenedor">
-              <div 
-                className="perfil-usuario" 
-                onClick={() => setMenuPerfilAbierto(!menuPerfilAbierto)}
-              >
-                <div className="avatar-circulo">👤</div>
-                <div className="datos-agente">
-                  <span className="rol-agente">{usuarioLogueado.rol}</span>
-                  <span className="nombre-agente">{usuarioLogueado.nombre_completo} ▼</span>
-                </div>
-              </div>
-
-              {menuPerfilAbierto && (
-                <div className="dropdown-perfil">
-                  <div className="dropdown-item">⚙️ Configuración</div>
-                  <div 
-                    className="dropdown-item logout" 
-                    onClick={() => setUsuarioLogueado(null)}
-                  >
-                    🚪 Cerrar Sesión
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* 2. RELOJ DIGITAL */}
-            <div className="reloj-sistema">
-              <span className="fecha-texto">{fechaFormateada}</span>
-              <span className="hora-texto">{horaFormateada}</span>
-            </div>
-
-          </div>
-          
-        </header>
-
-        {/* CONTENIDO DEL DASHBOARD */}
-        <main className="dashboard-content">
-          <div className="grid-dashboard">
-            
-            {/* Bloques de la izquierda: Buscador e Historial */}
-            <div className="columna-izquierda">
-              <SearchPanel onBuscar={realizarBusqueda} />
-              <HistoryTable />
-            </div>
-
-            {/* Bloque de la derecha: Tarjeta del Estado del Vehículo */}
-            <div className={`tarjeta-resultado estado-${vehiculoSeleccionado.estado}`}>
-              <div className="icono-estado">{vehiculoSeleccionado.icono}</div>
-              <h2>{vehiculoSeleccionado.titulo}</h2>
-              {/* --- INICIO DE LA CÉDULA TIPO DNRPA --- */}
-          <div className="contenedor-cedulas">
-            {/* FRENTE DE LA CÉDULA */}
-            <div className="cedula-fisica">
-              <div className="cedula-fondo-agua">DNRPA</div>
-              <div className="cedula-cabecera">
-                <p className="republica">REPÚBLICA ARGENTINA</p>
-                <p className="titulo-cedula">CÉDULA DE IDENTIFICACIÓN DE VEHÍCULOS</p>
-              </div>
-              <div className="cedula-contenido">
-                <div className="cedula-datos">
-                  <p><span>MARCA:</span> <strong>{vehiculoSeleccionado.marca}</strong></p>
-                  <p><span>MODELO:</span> <strong>{vehiculoSeleccionado.modelo}</strong></p>
-                  <p><span>TIPO:</span> <strong>{vehiculoSeleccionado.tipo}</strong></p>
-                  <p><span>CHASIS:</span> <strong>{vehiculoSeleccionado.numero_chasis}</strong></p>
-                  <p><span>MOTOR:</span> <strong>{vehiculoSeleccionado.numero_motor}</strong></p>
-                </div>
-                <div className="cedula-qr-contenedor">
-                  {/* Generamos el QR en vivo solo si el sistema no está "esperando" */}
-                  {vehiculoSeleccionado.marca !== "-" && (
-                    <QRCode 
-                      value={`DOMINIO: ${vehiculoSeleccionado.titulo === 'SIN REGISTRO EN SISTEMA' ? '-' : vehiculoSeleccionado.titulo}\nMARCA: ${vehiculoSeleccionado.marca}\nCHASIS: ${vehiculoSeleccionado.numero_chasis}\nMOTOR: ${vehiculoSeleccionado.numero_motor}\nTITULAR: ${vehiculoSeleccionado.titular_nombre}`} 
-                      size={70} 
-                      level="L"
-                    />
+                  {/* === PANTALLAS DINÁMICAS (Cambian según el menú) === */}
+                  
+                  {/* PANTALLA: VEHÍCULOS */}
+                  {moduloActivo === 'vehiculos' && (
+                    <div className="modulo-vehiculos" style={{ marginTop: '20px' }}>
+                      <SearchPanel onBuscar={manejarBuscarVehiculo} />
+                      
+                      {vehiculoSeleccionado && (
+                        <div className="resultado-consulta" style={{ marginTop: '20px', padding: '15px', backgroundColor: '#2c3e50', borderRadius: '8px' }}>
+                          <p style={{ color: '#fff' }}>Vehículo seleccionado listo para procesar.</p>
+                          <div style={{ marginTop: '15px' }}>
+                            <button className="btn-imprimir" onClick={() => window.open('/imprimir', '_blank')}>
+                              🖨️ IMPRIMIR CÉDULA ACTUAL
+                            </button>
+                            <button 
+                              className="btn-imprimir" 
+                              style={{ marginLeft: '10px', backgroundColor: '#006064', color: 'white' }} 
+                              onClick={() => window.open('/imprimir-todas', '_blank')}
+                            >
+                              🖨️ IMPRIMIR TODO EL REGISTRO
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                      
+                      <HistoryTable />
+                    </div>
                   )}
+
+                  {/* PANTALLA: PERSONAS */}
+                  {moduloActivo === 'personas' && (
+                    <div className="modulo-personas" style={{ marginTop: '20px' }}>
+                      <ConsultaPersonas />
+                    </div>
+                  )}
+
                 </div>
               </div>
-            </div>
-            {/* DORSO DE LA CÉDULA */}
-            <div className="cedula-fisica dorso">
-              <div className="cedula-fondo-agua">DNRPA</div>
-              <div className="cedula-cabecera">
-                <p className="titulo-cedula" style={{textAlign: 'right'}}>IDENTIFICACIÓN DEL TITULAR</p>
-              </div>
-              <div className="cedula-datos">
-                <p><span>TITULAR:</span> <strong>{vehiculoSeleccionado.titular_nombre}</strong></p>
-                <p><span>D.N.I.:</span> <strong>{vehiculoSeleccionado.titular_dni}</strong></p>
-                <p><span>DOMICILIO:</span> <strong>{vehiculoSeleccionado.domicilio}</strong></p>
-              </div>
-            </div>
-          </div>
-          {/* --- FIN DE LA CÉDULA TIPO DNRPA --- */}
-          <button 
-  className="btn-imprimir" 
-  onClick={() => {
-    // Guardamos los datos en la memoria temporal del navegador
-    localStorage.setItem('vehiculoParaImprimir', JSON.stringify(vehiculoSeleccionado));
-    // Abrimos una pestaña nueva
-    window.open('/imprimir', '_blank');
-  }}
->
-  🖨️ GENERAR CÉDULA EN VENTANA NUEVA
-</button>
-{/* Botón para la impresión masiva de todo el lote */}
-          <button 
-            className="btn-imprimir" 
-            style={{ marginLeft: '10px', backgroundColor: '#006064' }} 
-            onClick={() => window.open('/imprimir-todas', '_blank')}
-          >
-            🖨️ IMPRIMIR TODO EL REGISTRO
-          </button>
-            </div>
-
-          </div>
-        </main>
-          </div>
-          </div>
-        )
-      } 
-      />
-    </Routes>
-  </Router>
+            )
+          } 
+        />
+      </Routes>
+    </Router>
   );
 }
 
