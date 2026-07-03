@@ -12,12 +12,33 @@ function Login({ onLoginExitoso }) {
     });
   };
 
-  const enviarFormulario = (e) => {
+  const enviarFormulario = async (e) => {
     e.preventDefault();
     if (!credenciales.usuario.trim() || !credenciales.password.trim()) return;
-    
-    // CORRECCIÓN: Enviamos todo el objeto (usuario y contraseña) al App.jsx
-    onLoginExitoso(credenciales); 
+
+    try {
+      // Hacemos la consulta real a tu servidor en la nube
+      const respuesta = await fetch('https://scip-backend-yktr.onrender.com/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credenciales)
+      });
+
+      const datos = await respuesta.json();
+
+      if (respuesta.ok && datos.loginExitoso) {
+        // ¡Acá está la magia! Le mandamos a App.jsx toda la información REAL de la base de datos
+        onLoginExitoso(datos.usuario);
+      } else {
+        // Si puso mal la clave, le avisamos
+        alert(datos.mensaje || 'Credenciales inválidas');
+      }
+    } catch (error) {
+      console.error("Error en el login:", error);
+      alert("Error al intentar conectar con el servidor.");
+    }
   };
 
   return (
