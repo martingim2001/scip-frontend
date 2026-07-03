@@ -13,9 +13,8 @@ function App() {
   const [fechaHora, setFechaHora] = useState(new Date());
   const [moduloActivo, setModuloActivo] = useState('vehiculos'); 
   const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState(null);
-  
-  // ⚡ NUEVO: Este contador obligará a la tabla de historial a refrescarse
   const [historialTrigger, setHistorialTrigger] = useState(0);
+  const [menuPerfilAbierto, setMenuPerfilAbierto] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => setFechaHora(new Date()), 1000);
@@ -93,26 +92,32 @@ function App() {
                 </aside>
 
                 <div className="contenedor-derecho">
-                 <header className="cabecera-superior" style={{ display: 'flex', justifyContent: 'space-between', padding: '15px', borderBottom: '1px solid #34495e', color: 'white', alignItems: 'center' }}>
+                <header className="cabecera-superior">
   <span>{fechaHora.toLocaleTimeString()}</span>
-  
-  {/* Agregamos el botón de cerrar sesión */}
-  <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-    <span>Agente: <strong>{usuarioLogueado.nombre_completo || 'Martín Giménez'}</strong></span>
-    <button 
-      onClick={() => setUsuarioLogueado(null)} // Esto resetea el usuario y te saca del sistema
-      style={{
-        backgroundColor: '#e74c3c',
-        color: 'white',
-        border: 'none',
-        padding: '5px 10px',
-        borderRadius: '5px',
-        cursor: 'pointer',
-        fontSize: '12px'
-      }}
-    >
-      Cerrar Sesión
-    </button>
+
+  {/* Contenedor del perfil con el diseño de Panel de Control Operativo */}
+  <div className="perfil-agente" onClick={() => setMenuPerfilAbierto(!menuPerfilAbierto)}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+      {/* Ícono de usuario */}
+      <div style={{ backgroundColor: '#2a303c', borderRadius: '50%', width: '35px', height: '35px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        👤
+      </div>
+      {/* Nombre y Rol */}
+      <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+        <span style={{ fontSize: '10px', color: '#3498db', fontWeight: 'bold' }}>AGENTE</span>
+        <span style={{ fontSize: '13px', fontWeight: 'bold' }}>{usuarioLogueado.nombre_completo} ▼</span>
+      </div>
+    </div>
+
+    {/* Menú desplegable */}
+    {menuPerfilAbierto && (
+      <div className="menu-desplegable">
+        <p style={{ margin: '0 0 10px 0', fontSize: '12px', color: '#888' }}>Panel de Control Operativo</p>
+        <button className="btn-cerrar-sesion" onClick={() => setUsuarioLogueado(null)}>
+          Cerrar Sesión
+        </button>
+      </div>
+    )}
   </div>
 </header>
 
