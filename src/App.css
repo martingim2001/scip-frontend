@@ -1,5 +1,5 @@
 /* ==========================================
-   RESETEO Y VARIABLES GLOBALES
+   1. RESETEO Y VARIABLES GLOBALES
 ========================================== */
 * {
   margin: 0;
@@ -9,27 +9,24 @@
 }
 
 body {
-  background-color: #1a1e25; /* Fondo principal gris oscuro */
+  background-color: #1a1e25;
   color: #ffffff;
-  overflow: hidden; /* Evita el scroll doble en la página completa */
+  overflow: hidden;
 }
 
 #root {
   width: 100%;
   height: 100%;
-  margin: 0;
-  padding: 0;
 }
 
 /* ==========================================
-   ESTRUCTURA PRINCIPAL (LAYOUT)
+   2. ESTRUCTURA PRINCIPAL (LAYOUT)
 ========================================== */
 .layout-principal {
   display: flex;
   height: 100vh;
 }
 
-/* --- Barra Lateral Izquierda --- */
 .sidebar {
   width: 250px;
   background-color: #121418;
@@ -39,326 +36,73 @@ body {
   flex-direction: column;
 }
 
-/* --- Contenedor Derecho (Topbar + Dashboard) --- */
 .contenedor-derecho {
   flex: 1;
   display: flex;
   flex-direction: column;
   background-color: #1a1e25;
-  overflow-y: auto; /* Permite scroll solo en esta área si el contenido crece */
+  overflow-y: auto;
 }
 
 /* ==========================================
-   BARRA SUPERIOR (TOPBAR) Y PERFIL
+   3. BARRA SUPERIOR Y PERFIL DESPLEGABLE
 ========================================== */
-.topbar {
-  height: 70px;
-  min-height: 70px;
-  background-color: #121418;
-  border-bottom: 1px solid #2a303c;
+.cabecera-superior {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 0 30px;
-}
-
-.topbar-titulo p {
-  font-size: 20px;
-  color: #ccc;
-  font-weight: 500;
-}
-
-.topbar-info {
-  display: flex;
+  padding: 15px 30px;
+  border-bottom: 1px solid #34495e;
+  background-color: #121418;
+  color: white;
   align-items: center;
-  gap: 30px;
 }
 
-/* --- Perfil y Menú Desplegable --- */
-.perfil-usuario-contenedor {
-  position: relative; /* Clave para que el menú flote debajo de este elemento */
-  border-right: 1px solid #2a303c;
-  padding-right: 30px;
-}
-
-.perfil-usuario {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.perfil-agente {
+  position: relative;
   cursor: pointer;
   padding: 5px 10px;
-  border-radius: 8px;
-  transition: background-color 0.3s ease;
+  border-radius: 4px;
+  transition: background 0.3s;
 }
 
-.perfil-usuario:hover {
-  background-color: rgba(255, 255, 255, 0.05); /* Brillo sutil al pasar el mouse */
+.perfil-agente:hover {
+  background-color: #2c3e50;
 }
 
-.avatar-circulo {
-  background-color: #2a303c;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 20px;
-}
-
-.datos-agente {
-  display: flex;
-  flex-direction: column;
-}
-
-.rol-agente {
-  font-size: 12px;
-  color: #3498db;
-  font-weight: bold;
-}
-
-.nombre-agente {
-  font-size: 14px;
-  font-weight: bold;
-  color: #fff;
-}
-
-/* --- Estilos del Cuadro Desplegable (Dropdown) --- */
-.dropdown-perfil {
+.menu-desplegable {
   position: absolute;
-  top: 110%; /* Lo empuja justo debajo del perfil */
-  right: 30px; /* Lo alinea a la derecha */
-  background-color: #121418;
-  border: 1px solid #2a303c;
+  top: 100%;
+  right: 0;
+  background-color: #1a252f;
+  border: 1px solid #34495e;
   border-radius: 8px;
-  width: 200px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7); /* Sombra oscura para despegarlo del fondo */
-  display: flex;
-  flex-direction: column;
-  z-index: 1000; /* Asegura que quede siempre por encima de todo */
-  overflow: hidden;
-  animation: aparecer 0.2s ease-out forwards;
+  padding: 15px;
+  margin-top: 10px;
+  width: 180px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  z-index: 1000;
+  text-align: center;
 }
 
-/* Animación rápida de aparición */
-@keyframes aparecer {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.dropdown-item {
-  padding: 15px 20px;
-  color: #ccc;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.dropdown-item:hover {
-  background-color: #1e3a5f;
-  color: #fff;
-}
-
-.dropdown-item.logout {
-  border-top: 1px solid #2a303c;
-}
-
-.dropdown-item.logout:hover {
+.btn-cerrar-sesion {
   background-color: #e74c3c;
-  color: #fff;
-}
-
-/* --- Reloj del Sistema --- */
-.reloj-sistema {
-  display: flex;
-  flex-direction: column;
-  text-align: right;
-}
-
-.fecha-texto {
-  font-size: 12px;
-  color: #888;
-  text-transform: capitalize;
-}
-
-.hora-texto {
-  font-size: 16px;
-  font-weight: bold;
-  color: #fff;
-}
-
-/* ==========================================
-   DASHBOARD Y COMPONENTES
-========================================== */
-.dashboard-content {
-  padding: 30px;
-  flex: 1;
-}
-
-.grid-dashboard {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
-  gap: 30px;
-}
-
-.columna-izquierda {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* --- Panel de Búsqueda --- */
-.panel-busqueda {
-  background-color: #121418;
-  border: 1px solid #1e3a5f;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 0 15px rgba(41, 128, 185, 0.15);
-}
-
-.panel-busqueda h3 {
-  color: #fff;
-  font-size: 14px;
-  margin-bottom: 15px;
-  letter-spacing: 1px;
-}
-
-.input-group {
-  display: flex;
-  gap: 15px;
-}
-
-.input-group input {
-  flex: 1;
-  background-color: #0b0c10;
-  border: 1px solid #1e3a5f;
-  color: #fff;
-  padding: 12px 15px;
-  border-radius: 5px;
-  font-size: 18px;
-  outline: none;
-  text-transform: uppercase;
-}
-
-.input-group input:focus {
-  border-color: #3498db;
-}
-
-.input-group button {
-  background-color: #1e3a5f;
   color: white;
   border: none;
-  padding: 12px 25px;
+  padding: 8px 12px;
   border-radius: 5px;
-  font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
-}
-
-.input-group button:hover {
-  background-color: #2980b9;
-}
-
-/* --- Panel Historial (Tabla) --- */
-.panel-historial {
-  background-color: #121418;
-  border-radius: 10px;
-  padding: 20px;
-  border: 1px solid #2a303c;
-}
-
-.panel-historial h3 {
-  color: #fff;
-  font-size: 15px;
-  margin-bottom: 15px;
-  border-bottom: 1px solid #2a303c;
-  padding-bottom: 10px;
-}
-
-.tabla-historial {
   width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-.tabla-historial th {
-  text-align: left;
-  padding: 12px 10px;
-  border-bottom: 1px solid #2a303c;
-  color: #888;
   font-weight: bold;
+  margin-top: 10px;
+  transition: background 0.2s;
 }
 
-.tabla-historial td {
-  padding: 12px 10px;
-  border-bottom: 1px solid #1e222b;
-  color: #ccc;
+.btn-cerrar-sesion:hover {
+  background-color: #c0392b;
 }
-
-.texto-verde { color: #2ecc71 !important; font-weight: 500; }
-.texto-rojo { color: #e74c3c !important; font-weight: 500; }
-
-.paginacion {
-  text-align: right;
-  padding-top: 15px;
-  color: #666;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-/* --- Tarjeta de Resultado Dinámica --- */
-.tarjeta-resultado {
-  background-color: #121418;
-  border-radius: 10px;
-  padding: 40px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.icono-estado {
-  font-size: 70px;
-  margin-bottom: 10px;
-}
-
-.datos-vehiculo p {
-  font-size: 18px;
-  margin: 8px 0;
-  color: #aaa;
-}
-
-.datos-vehiculo strong {
-  color: #fff;
-  font-size: 20px;
-}
-
-/* Estados de colores */
-.estado-verde {
-  border: 2px solid #2ecc71;
-  box-shadow: 0 0 25px rgba(46, 204, 113, 0.2);
-}
-.estado-verde h2 { color: #2ecc71; margin: 15px 0 25px; font-size: 26px; }
-
-.estado-rojo {
-  border: 2px solid #e74c3c;
-  box-shadow: 0 0 25px rgba(231, 76, 60, 0.3);
-}
-.estado-rojo h2 { color: #e74c3c; margin: 15px 0 25px; font-size: 26px; }
-
-.estado-gris {
-  border: 2px solid #7f8c8d;
-  box-shadow: 0 0 20px rgba(127, 140, 141, 0.1);
-}
-.estado-gris h2 { color: #7f8c8d; margin: 15px 0 25px; font-size: 24px; }
-
 
 /* ==========================================
-   PANTALLA DE LOGIN
+   4. PANTALLA DE LOGIN
 ========================================== */
 .login-container {
   height: 100vh;
@@ -424,257 +168,56 @@ body {
   background-color: #1c5980;
 }
 
-.toggle-registro {
-  text-align: center;
-  color: #3498db;
-  margin-top: 20px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-/* =========================================
-   DISEÑO RESPONSIVO (MÓVILES Y TABLETS)
-========================================= */
-@media screen and (max-width: 768px) {
-    /* 1. Apilamos el diseño: Sidebar arriba, contenido principal abajo */
-    .layout-principal {
-        flex-direction: column;
-        height: auto;
-        min-height: 100vh;
-    }
-
-    /* 2. La barra lateral ahora ocupa todo el ancho y se adapta */
-    .sidebar {
-        width: 100%;
-        height: auto;
-        border-right: none;
-        border-bottom: 1px solid #2a303c;
-        padding: 15px;
-    }
-
-    /* 3. El dashboard (buscador y tabla) pasa a tener 1 sola columna en vez de 2 */
-    .grid-dashboard {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    /* 4. Reducimos el relleno de los costados para aprovechar la pantalla */
-    .dashboard-content {
-        padding: 15px;
-    }
-
-    /* 5. Apilamos el input de la patente y el botón de buscar */
-    .input-group {
-        flex-direction: column;
-    }
-    .input-group button {
-        width: 100%; /* El botón ocupará todo el ancho para ser fácil de tocar */
-    }
-
-    /* 6. Ajustes en la barra superior (topbar) */
-    .topbar {
-        padding: 0 15px;
-    }
-    .perfil-usuario-contenedor {
-        padding-right: 0;
-        border-right: none;
-    }
-
-    /* 7. Ocultamos el reloj del sistema en celulares (ahorra mucho espacio) */
-    .reloj-sistema {
-        display: none;
-    }
-    /* 8. Liberamos el bloqueo de scroll para poder deslizar en el celular */
-    body {
-        overflow: auto;
-    }
-    
-    .contenedor-derecho {
-        overflow: visible;
-    }
-}
-.cedula-card {
-  background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
-  border: 1px solid #80deea;
-  border-radius: 15px;
+/* ==========================================
+   5. MÓDULO VEHÍCULOS (BUSCADOR Y TABLA)
+========================================== */
+.panel-busqueda {
+  background-color: #121418;
+  border: 1px solid #1e3a5f;
+  border-radius: 10px;
   padding: 20px;
-  width: 350px;
-  margin: 20px auto;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  color: #006064;
-  font-family: 'Courier New', Courier, monospace; /* Estilo de máquina de escribir */
+  margin: 0 20px;
+  box-shadow: 0 0 15px rgba(41, 128, 185, 0.15);
 }
 
-.cedula-header {
-  text-align: center;
-  border-bottom: 2px solid #006064;
-  margin-bottom: 15px;
-  padding-bottom: 5px;
-}
-
-.cedula-body {
+.input-group {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  gap: 15px;
 }
 
-.cedula-info p {
-  margin: 5px 0;
-  font-size: 14px;
-}
-
-.cedula-qr {
-  background: white;
-  padding: 5px;
+.input-group input {
+  flex: 1;
+  background-color: #0b0c10;
+  border: 1px solid #1e3a5f;
+  color: #fff;
+  padding: 12px 15px;
   border-radius: 5px;
+  font-size: 18px;
+  outline: none;
+  text-transform: uppercase;
 }
+
+.input-group input:focus {
+  border-color: #3498db;
+}
+
+.input-group button {
+  background-color: #1e3a5f;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.input-group button:hover {
+  background-color: #2980b9;
+}
+
 /* ==========================================
-   ESTILOS PARA IMPRIMIR LAS TARJETAS
-========================================== */
-@media print {
-  /* 1. Forzamos los colores celestes de fondo */
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-  
-  /* Ocultamos el menú y resto de app */
-  body * {
-    visibility: hidden;
-  }
-  .contenedor-impresion-masiva, .contenedor-impresion-masiva * {
-    visibility: visible;
-  }
-  
-  /* 2. Acomodamos el listado para la hoja A4 */
-  .contenedor-impresion-masiva {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap; 
-    gap: 15px; 
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-  }
-
-  /* 3. Evitamos que una tarjeta se corte a la mitad en el cambio de hoja */
-  .par-cedulas {
-    page-break-inside: avoid;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-
-  /* 4. El diseño exacto de la tarjeta DNRPA física */
-  .cedula-fisica {
-    position: relative !important;
-    width: 8.5cm;
-    height: 5.5cm;
-    border: 1px dashed #95a5a6 !important; /* Línea punteada gris clarito */
-    box-shadow: none !important;
-    background: linear-gradient(135deg, #d2f1f8 0%, #a2def0 100%) !important;
-    color: #000000 !important;
-    overflow: hidden !important;
-    padding: 5px !important; /* Un poquito de aire interno para que no pegue en el borde */
-    box-sizing: border-box !important;
-  }
-
-  .cedula-fisica * {
-    color: #000000 !important;
-    font-weight: bold !important;
-  }
-
-/* Centramos solo la cabecera (República Argentina...) */
-  .cedula-cabecera {
-    text-align: center !important;
-    margin-bottom: 8px !important;
-    border-bottom: 1px solid #7bc6db !important;
-    padding-bottom: 4px !important;
-  }
-
-  .titulo-cedula {
-    font-size: 10px !important;
-  }
-
-  /* Tiramos los datos a la izquierda y armamos la estructura */
-  .cedula-datos {
-    text-align: left !important;
-    padding-left: 8px !important;
-    max-width: 75% !important; /* Respeta el espacio del QR */
-    margin-top: 5px !important;
-  }
-
-  /* Convertimos cada línea en una fila perfecta */
-  .cedula-datos p {
-    display: flex !important;
-    align-items: flex-start !important; /* Si el texto es largo, se alinea arriba */
-    font-size: 10px !important; 
-    margin-bottom: 4px !important;
-    line-height: 1.1 !important;
-  }
-
-  /* Ancho fijo para las etiquetas (MARCA, MODELO, etc.) para que queden encolumnadas */
-  .cedula-datos span {
-    width: 65px !important; 
-    flex-shrink: 0 !important; /* MAGIA: Evita que la palabra se aplaste */
-    font-weight: normal !important;
-    color: #2c3e50 !important;
-  }
-
-  /* Resaltamos el valor de la base de datos */
-  .cedula-datos strong {
-    flex: 1 !important; /* Toma el espacio que sobra */
-    font-weight: bold !important;
-    font-size: 10px !important;
-    text-transform: uppercase !important;
-    color: #000000 !important;
-    word-wrap: break-word !important; /* Rompe la palabra si es muy larga */
-  }
-
-  /* 5. BLINDAJE DEL QR: Bloqueo estricto de tamaño y posición */
-  .cedula-qr-contenedor {
-    position: absolute !important;
-    bottom: 50px !important;
-    right: 10px !important;
-    z-index: 9999 !important;
-    background-color: #ffffff !important;
-    width: 65px !important;
-    height: 65px !important;
-    max-width: 65px !important;  /* Freno de emergencia para el ancho */
-    max-height: 65px !important; /* Freno de emergencia para el alto */
-    padding: 3px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    border-radius: 4px;
-    border: 1px solid #000 !important;
-    box-sizing: border-box !important;
-  }
-
-  /* Obligamos al dibujo del QR a medir 60x60 píxeles exactos (nada de porcentajes) */
-  .cedula-qr-contenedor svg {
-    display: block !important;
-    width: 55px !important;  
-    height: 55px !important; 
-    max-width: 55px !important;
-    max-height: 55px !important;
-    object-fit: contain !important; /* Fuerza a mantener la proporción cuadrada */
-  }
-  /* ==========================================
-   OCULTAR ESCÁNER EN COMPUTADORAS (PC)
-========================================== */
-@media (min-width: 769px) {
-  .btn-camara {
-    display: none !important;
-  }
-}
-}
-/* ==========================================
-   ESTILOS PARA EL MÓDULO DE PERSONAS (SCIP)
+   6. MÓDULO PERSONAS (SCIP)
 ========================================== */
 .contenedor-personas {
   padding: 20px;
@@ -688,7 +231,6 @@ body {
   border: 2px solid #34495e;
 }
 
-/* Blindaje visual si salta la captura */
 .tarjeta-persona.con-captura {
   border-color: #e74c3c;
   box-shadow: 0 0 15px rgba(231, 76, 60, 0.4);
@@ -705,7 +247,6 @@ body {
   margin-bottom: 15px;
 }
 
-/* ANIMACIÓN POLICIAL INTERMITENTE */
 .alerta-roja-parpadeante {
   background-color: #e74c3c;
   color: white;
@@ -736,22 +277,10 @@ body {
   display: inline-block;
 }
 
-.datos-persona strong {
-  color: #ffffff;
-}
-
 .seccion-motivo {
   margin-top: 15px;
   padding-top: 15px;
   border-top: 1px dashed #e74c3c;
-}
-
-.seccion-motivo span {
-  color: #e74c3c;
-  font-weight: bold;
-  width: auto;
-  display: block;
-  margin-bottom: 5px;
 }
 
 .texto-motivo {
@@ -761,4 +290,170 @@ body {
   color: #f39c12 !important;
   font-weight: bold;
   line-height: 1.4;
+}
+
+/* ==========================================
+   7. EXTRAS DE UI (BOTONES CAMARA, ETC)
+========================================== */
+@media (min-width: 769px) {
+  .btn-camara {
+    display: none !important;
+  }
+}
+
+/* ==========================================
+   8. ESTILOS DE IMPRESIÓN (CÉDULAS DNRPA)
+========================================== */
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  body * {
+    visibility: hidden;
+  }
+  
+  .contenedor-impresion-masiva, .contenedor-impresion-masiva * {
+    visibility: visible;
+  }
+  
+  .contenedor-impresion-masiva {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 15px; 
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+  }
+
+  .par-cedulas {
+    page-break-inside: avoid;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .cedula-fisica {
+    position: relative !important;
+    width: 8.5cm;
+    height: 5.5cm;
+    border: 1px dashed #95a5a6 !important;
+    background: linear-gradient(135deg, #d2f1f8 0%, #a2def0 100%) !important;
+    color: #000000 !important;
+    overflow: hidden !important;
+    padding: 5px !important;
+    box-sizing: border-box !important;
+  }
+
+  .cedula-fisica * {
+    color: #000000 !important;
+    font-weight: bold !important;
+  }
+
+  .cedula-cabecera {
+    text-align: center !important;
+    margin-bottom: 8px !important;
+    border-bottom: 1px solid #7bc6db !important;
+    padding-bottom: 4px !important;
+  }
+
+  .titulo-cedula { font-size: 10px !important; }
+
+  .cedula-datos {
+    text-align: left !important;
+    padding-left: 8px !important;
+    max-width: 75% !important;
+    margin-top: 5px !important;
+  }
+
+  .cedula-datos p {
+    display: flex !important;
+    align-items: flex-start !important;
+    font-size: 10px !important; 
+    margin-bottom: 4px !important;
+    line-height: 1.1 !important;
+  }
+
+  .cedula-datos span {
+    width: 65px !important; 
+    flex-shrink: 0 !important;
+    font-weight: normal !important;
+    color: #2c3e50 !important;
+  }
+
+  .cedula-datos strong {
+    flex: 1 !important;
+    font-size: 10px !important;
+    text-transform: uppercase !important;
+    word-wrap: break-word !important;
+  }
+
+  .cedula-qr-contenedor {
+    position: absolute !important;
+    bottom: 50px !important;
+    right: 10px !important;
+    z-index: 9999 !important;
+    background-color: #ffffff !important;
+    width: 65px !important;
+    height: 65px !important;
+    padding: 3px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 4px;
+    border: 1px solid #000 !important;
+    box-sizing: border-box !important;
+  }
+
+  .cedula-qr-contenedor svg {
+    display: block !important;
+    width: 55px !important;  
+    height: 55px !important; 
+    object-fit: contain !important;
+  }
+}
+
+/* =========================================
+   9. DISEÑO RESPONSIVO (MÓVILES Y TABLETS)
+========================================= */
+@media screen and (max-width: 768px) {
+  .layout-principal {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid #2a303c;
+    padding: 15px;
+  }
+
+  .input-group {
+    flex-direction: column;
+  }
+  
+  .input-group button {
+    width: 100%;
+  }
+
+  .cabecera-superior {
+    padding: 15px;
+  }
+
+  body {
+    overflow: auto;
+  }
+  
+  .contenedor-derecho {
+    overflow: visible;
+  }
 }
