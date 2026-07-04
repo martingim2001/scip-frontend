@@ -14,6 +14,7 @@ function App() {
   const [moduloActivo, setModuloActivo] = useState('inicio');
   const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState(null);
   const [historialTrigger, setHistorialTrigger] = useState(0);
+  const [menuConsultasAbierto, setMenuConsultasAbierto] = useState(false);
   const [menuPerfilAbierto, setMenuPerfilAbierto] = useState(false);
   const [menuImpresionAbierto, setMenuImpresionAbierto] = useState(false);
   const [menuLateralAbierto, setMenuLateralAbierto] = useState(false);
@@ -94,15 +95,41 @@ function App() {
   </div>
 
   <nav style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-    <p onClick={() => { setModuloActivo('inicio'); setMenuLateralAbierto(false); }} style={{ color: moduloActivo === 'inicio' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}>
-      🏠 Panel Principal
-    </p>
-    <p onClick={() => { setModuloActivo('vehiculos'); setMenuLateralAbierto(false); }} style={{ color: moduloActivo === 'vehiculos' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}>
-      🚗 Consulta Vehículos
-    </p>
-    <p onClick={() => { setModuloActivo('personas'); setMenuLateralAbierto(false); }} style={{ color: moduloActivo === 'personas' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}>
-      👤 Consulta Personas
-    </p>
+    <p onClick={() => { setModuloActivo('inicio'); setMenuLateralAbierto(false); }} style={{ color: moduloActivo === 'inicio' ? '#fff' : '#888', cursor: 'pointer', margin: '5px 0' }}>
+          🏠 Panel Principal
+        </p>
+
+        {/* ==========================================
+            MENÚ DESPLEGABLE DE CONSULTAS
+        ========================================== */}
+        <div className="contenedor-desplegable">
+          <div 
+            className="boton-menu-principal" 
+            onClick={() => setMenuConsultasAbierto(!menuConsultasAbierto)}
+          >
+            <span>🔍 Consultas</span>
+            <span className="flecha-desplegable">{menuConsultasAbierto ? '▼' : '▶'}</span>
+          </div>
+          
+          {menuConsultasAbierto && (
+            <div className="submenu-opciones">
+              <div 
+                className="submenu-item" 
+                onClick={() => { setModuloActivo('vehiculos'); setMenuLateralAbierto(false); }}
+                style={{ color: moduloActivo === 'vehiculos' ? '#fff' : '#a0aabf' }}
+              >
+                🚗 Consulta Vehículos
+              </div>
+              <div 
+                className="submenu-item" 
+                onClick={() => { setModuloActivo('personas'); setMenuLateralAbierto(false); }}
+                style={{ color: moduloActivo === 'personas' ? '#fff' : '#a0aabf' }}
+              >
+                👤 Consulta Personas
+              </div>
+            </div>
+          )}
+        </div>
     
     {/* Menú desplegable de impresiones */}
     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
