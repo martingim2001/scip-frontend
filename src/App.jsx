@@ -181,9 +181,36 @@ function App() {
 
   </div>
 </header>
-<p onClick={() => setModuloActivo('inicio')} style={{ color: moduloActivo === 'inicio' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}>
-    🏠 Panel Principal
-  </p>
+ {/* =========================================
+    PANTALLA DE INICIO (MENÚ CENTRAL)
+========================================= */}
+{moduloActivo === 'inicio' && (
+  <div className="menu-inicio-contenedor">
+    <h1 style={{ color: '#fff', marginBottom: '50px', fontSize: '32px', letterSpacing: '2px', borderBottom: '2px solid #3498db', paddingBottom: '10px' }}>
+      Inicio
+    </h1>
+    
+    <div className="tarjetas-inicio-grid">
+      
+      {/* Botón Consulta Vehículos (Rectángulo Horizontal) */}
+      <div className="tarjeta-inicio-horizontal" onClick={() => setModuloActivo('vehiculos')}>
+        <div className="icono-tarjeta-horiz">🚗</div>
+        <div className="texto-tarjeta-horiz">
+          <h3>Consulta de Vehículo</h3>
+        </div>
+      </div>
+
+      {/* Botón Consulta Personas (Rectángulo Horizontal) */}
+      <div className="tarjeta-inicio-horizontal" onClick={() => setModuloActivo('personas')}>
+        <div className="icono-tarjeta-horiz">👤</div>
+        <div className="texto-tarjeta-horiz">
+          <h3>Consulta Personas</h3>
+        </div>
+      </div>
+
+    </div>
+  </div>
+)}
 
                   {moduloActivo === 'vehiculos' && (
                     <div className="modulo-vehiculos" style={{ marginTop: '20px' }}>

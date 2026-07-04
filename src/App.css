@@ -654,3 +654,37 @@ body {
   font-size: 14px;
   line-height: 1.6;
 }
+/* --- Botones Rectangulares (Basado en el diseño a mano) --- */
+.tarjeta-inicio-horizontal {
+  background-color: #121418;
+  border: 1px solid #1e3a5f;
+  border-radius: 12px;
+  padding: 30px 40px;
+  width: 450px; /* Bien anchos como en el dibujo */
+  max-width: 90vw; /* Para que no se rompan en celulares */
+  display: flex;
+  align-items: center;
+  gap: 25px; /* Separación entre el icono y el texto */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.tarjeta-inicio-horizontal:hover {
+  background-color: #1a252f;
+  border-color: #3498db;
+  transform: translateY(-5px);
+  box-shadow: 0 15px 25px rgba(52, 152, 219, 0.2);
+}
+
+.icono-tarjeta-horiz {
+  font-size: 50px;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+}
+
+.texto-tarjeta-horiz h3 {
+  color: #ffffff;
+  font-size: 24px;
+  margin: 0;
+  font-weight: 500;
+}
