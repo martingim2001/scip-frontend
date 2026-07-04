@@ -62,9 +62,11 @@ body {
   left: 0 !important;
   width: 280px !important;
   height: 100vh !important;
-  z-index: 10000 !important; /* Lo pone por encima de absolutamente todo */
-  transform: translateX(-100%) !important; /* Esto lo esconde fuera de la pantalla */
+  background-color: #121418 !important; /* ESTA LÍNEA LE DEVUELVE EL COLOR SÓLIDO */
+  z-index: 10000 !important; 
+  transform: translateX(-100%) !important; 
   transition: transform 0.3s ease-in-out !important;
+  box-shadow: 4px 0 15px rgba(0,0,0,0.8) !important; /* Le da una sombra espectacular */
 }
 
 /* Cuando toques las 3 rayitas, React activa esto y entra a la pantalla */
