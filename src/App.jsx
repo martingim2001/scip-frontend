@@ -133,7 +133,6 @@ function App() {
     <button className="btn-hamburguesa" onClick={() => setMenuLateralAbierto(true)}>
       ☰
     </button>
-    <h2 className="titulo-operativo">Panel de Control Operativo</h2>
   </div>
   
   {/* 1. Espacio izquierdo (para balancear el diseño) */}
