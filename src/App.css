@@ -785,14 +785,14 @@ body {
 
 .foto-prontuario {
   width: 130px;
-  height: 130px;
+  height: 170px; /* Hacemos la caja más alta (rectangular) */
   object-fit: cover;
+  object-position: top; /* ¡LA MAGIA! Obliga a que la imagen se alinee desde arriba, no corta cabezas */
   border-radius: 8px;
-  border: 3px solid #e74c3c; /* Borde rojo que hace juego con la tarjeta */
+  border: 3px solid #e74c3c;
   box-shadow: 0 0 15px rgba(231, 76, 60, 0.4);
   background-color: #121418;
 }
-
 .datos-resultado {
   flex: 1;
   text-align: left; /* Alineamos el texto a la izquierda para que quede prolijo al lado de la cara */
