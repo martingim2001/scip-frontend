@@ -6,6 +6,7 @@ import Login from './components/Login';
 import CedulaPrint from './components/CedulaPrint';
 import ImprimirTodas from './components/ImprimirTodas';
 import ConsultaPersonas from './components/ConsultaPersonas';
+import ListadoPersonas from './components/ListadoPersonas';
 import './App.css';
 
 function App() {
@@ -333,6 +334,7 @@ function App() {
                       <ConsultaPersonas />
                     </div>
                   )}
+                  {moduloActivo === 'listadoPersonas' && <ListadoPersonas />}
                 </div>
               </div>
             )
