@@ -95,9 +95,17 @@ function App() {
   </div>
 
   <nav style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-    <p onClick={() => { setModuloActivo('inicio'); setMenuLateralAbierto(false); }} style={{ color: moduloActivo === 'inicio' ? '#fff' : '#888', cursor: 'pointer', margin: '5px 0' }}>
-          🏠 Panel Principal
-        </p>
+   {/* BOTÓN DE INICIO (Con el mismo diseño que Consultas) */}
+        <div 
+          className="boton-menu-principal" 
+          onClick={() => { setModuloActivo('inicio'); setMenuLateralAbierto(false); }}
+          style={{ 
+            color: moduloActivo === 'inicio' ? '#fff' : '', 
+            marginBottom: '10px' 
+          }}
+        >
+          <span>🏠 Inicio</span>
+        </div>
 
         {/* ==========================================
             MENÚ DESPLEGABLE DE CONSULTAS
