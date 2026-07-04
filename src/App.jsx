@@ -16,6 +16,7 @@ function App() {
   const [historialTrigger, setHistorialTrigger] = useState(0);
   const [menuPerfilAbierto, setMenuPerfilAbierto] = useState(false);
   const [menuImpresionAbierto, setMenuImpresionAbierto] = useState(false);
+  const [menuLateralAbierto, setMenuLateralAbierto] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => setFechaHora(new Date()), 1000);
@@ -78,20 +79,32 @@ function App() {
             ) : (
               <div className="layout-principal">
                 
-                <aside className="sidebar">
-  <h2 style={{ color: '#fff', marginBottom: '20px' }}>S.C.I.P.</h2>
+                {/* Fondo oscuro que aparece cuando el menú está abierto */}
+{menuLateralAbierto && (
+  <div className="overlay-menu" onClick={() => setMenuLateralAbierto(false)}></div>
+)}
+
+{/* La barra lateral ahora usa la variable para agregar la clase 'abierta' */}
+<aside className={`sidebar ${menuLateralAbierto ? 'abierta' : ''}`}>
+  
+  {/* Botón cruz para cerrar el menú en móviles */}
+  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+    <h2 style={{ color: '#fff', margin: 0 }}>S.C.I.P.</h2>
+    <button className="btn-cerrar-menu" onClick={() => setMenuLateralAbierto(false)}>✖</button>
+  </div>
+
   <nav style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-    <p onClick={() => setModuloActivo('inicio')} style={{ color: moduloActivo === 'inicio' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}>
-    🏠 Panel Principal
-  </p>
-    <p onClick={() => setModuloActivo('vehiculos')} style={{ color: moduloActivo === 'vehiculos' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}>
+    <p onClick={() => { setModuloActivo('inicio'); setMenuLateralAbierto(false); }} style={{ color: moduloActivo === 'inicio' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}>
+      🏠 Panel Principal
+    </p>
+    <p onClick={() => { setModuloActivo('vehiculos'); setMenuLateralAbierto(false); }} style={{ color: moduloActivo === 'vehiculos' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}>
       🚗 Consulta Vehículos
     </p>
-    <p onClick={() => setModuloActivo('personas')} style={{ color: moduloActivo === 'personas' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}>
+    <p onClick={() => { setModuloActivo('personas'); setMenuLateralAbierto(false); }} style={{ color: moduloActivo === 'personas' ? '#3498db' : '#888', fontWeight: 'bold', cursor: 'pointer' }}>
       👤 Consulta Personas
     </p>
     
-    {/* NUEVO: Menú desplegable de impresiones */}
+    {/* Menú desplegable de impresiones */}
     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
       <p onClick={() => setMenuImpresionAbierto(!menuImpresionAbierto)} style={{ color: '#888', fontWeight: 'bold', cursor: 'pointer' }}>
         🖨️ Impresión Tarjeta <span style={{ float: 'right', fontSize: '10px', marginTop: '4px' }}>{menuImpresionAbierto ? '▲' : '▼'}</span>
@@ -122,6 +135,12 @@ function App() {
 
   {/* 2. Título Central Absoluto */}
   <div className="cabecera-centro">
+    <h2 className="titulo-operativo">Panel de Control Operativo</h2>
+  </div>
+  <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+    <button className="btn-hamburguesa" onClick={() => setMenuLateralAbierto(true)}>
+      ☰
+    </button>
     <h2 className="titulo-operativo">Panel de Control Operativo</h2>
   </div>
 
