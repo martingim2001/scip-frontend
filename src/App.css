@@ -750,3 +750,31 @@ body {
   align-items: center;
   gap: 8px;
 }
+/* ==========================================
+   TARJETAS DE RESULTADO DE PERSONAS
+========================================== */
+.tarjeta-persona {
+  background-color: #121418; /* Fondo oscuro elegante */
+  border-radius: 12px;
+  padding: 25px;
+  margin-top: 25px;
+  text-align: center;
+  color: white;
+  width: 100%;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: all 0.3s ease;
+}
+
+/* 🚨 Tarjeta con antecedente (ROJO) */
+.tarjeta-persona.alerta-roja {
+  border: 2px solid #e74c3c;
+  box-shadow: 0 0 25px rgba(231, 76, 60, 0.4); /* Brillo rojo */
+}
+
+/* ✅ Tarjeta sin impedimentos (VERDE) */
+.tarjeta-persona.alerta-verde {
+  border: 2px solid #2ecc71;
+  box-shadow: 0 0 25px rgba(46, 204, 113, 0.4); /* Brillo verde */
+}
