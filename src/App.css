@@ -690,3 +690,22 @@ body {
   margin: 0;
   font-weight: 500;
 }
+/* ==========================================
+   CORRECCIÓN CABECERA EN CELULARES
+========================================== */
+@media screen and (max-width: 768px) {
+  /* Escondemos el título para que no choque con el perfil */
+  .titulo-operativo {
+    display: none !important; 
+  }
+  
+  /* Aseguramos que el menú quede a la izquierda y el perfil a la derecha */
+  .cabecera-superior > div:first-child {
+    flex: 0 !important;
+  }
+  
+  .cabecera-derecha {
+    flex: 1 !important;
+    justify-content: flex-end !important;
+  }
+}
