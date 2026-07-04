@@ -776,3 +776,25 @@ body {
   align-items: center;
   gap: 8px;
 }
+/* ==========================================
+   FOTO DE PRONTUARIO (Módulo Personas)
+========================================== */
+.contenedor-foto {
+  flex-shrink: 0;
+}
+
+.foto-prontuario {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 3px solid #e74c3c; /* Borde rojo que hace juego con la tarjeta */
+  box-shadow: 0 0 15px rgba(231, 76, 60, 0.4);
+  background-color: #121418;
+}
+
+.datos-resultado {
+  flex: 1;
+  text-align: left; /* Alineamos el texto a la izquierda para que quede prolijo al lado de la cara */
+  min-width: 250px;
+}

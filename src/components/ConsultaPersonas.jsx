@@ -52,30 +52,52 @@ const ConsultaPersonas = () => {
 
       {resultado && (
         <div className={`tarjeta-resultado-persona ${resultado.pedido_captura ? 'alerta-captura' : 'estado-limpio'}`}>
-          <div className="cabecera-resultado">
-            <h4>{resultado.apellido}, {resultado.nombre}</h4>
-            <p><strong>DNI:</strong> {resultado.dni}</p>
-          </div>
           
-          <div className="cuerpo-resultado">
-            {resultado.pedido_captura ? (
-              <div className="bloque-peligro">
-                <span className="alerta-icono">🚨</span>
-                <div>
-                  <h5>PEDIDO DE CAPTURA ACTIVO</h5>
-                  <p><strong>Motivo:</strong> {resultado.motivo_captura || 'No especificado'}</p>
-                  <p className="instruccion-policial">Proceder con el protocolo de detención preventiva.</p>
-                </div>
-              </div>
-            ) : (
-              <div className="bloque-seguro">
-                <span className="seguro-icono">✅</span>
-                <div>
-                  <h5>SIN NOVEDAD / ESTADO SIN SOLICITUD</h5>
-                  <p>El ciudadano no posee impedimentos legales vigentes en el sistema.</p>
-                </div>
+          {/* CONTENEDOR FLEX PARA PONER FOTO Y DATOS LADO A LADO */}
+          <div style={{ display: 'flex', gap: '25px', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}>
+            
+            {/* 📸 FOTO: Solo aparece si hay pedido de captura */}
+            {resultado.pedido_captura && (
+              <div className="contenedor-foto">
+                <img 
+                  src={resultado.foto_url || "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"} 
+                  alt="Foto Prontuario" 
+                  className="foto-prontuario"
+                />
               </div>
             )}
+
+            {/* 📝 DATOS (Todo lo que ya tenías, envuelto acá) */}
+            <div className="datos-resultado">
+              
+              <div className="cabecera-resultado">
+                <h4>{resultado.apellido}, {resultado.nombre}</h4>
+                <p><strong>DNI:</strong> {resultado.dni}</p>
+              </div>
+
+              <div className="cuerpo-resultado">
+                {resultado.pedido_captura ? (
+                  <div className="bloque-peligro">
+                    <span className="alerta-icono">🚨</span>
+                    <div>
+                      <h5>PEDIDO DE CAPTURA ACTIVO</h5>
+                      <p><strong>Motivo:</strong> {resultado.motivo_captura || 'No especificado'}</p>
+                      <p className="instruccion-policial">Proceder con el protocolo de detención preventiva.</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="bloque-seguro">
+                    <span className="seguro-icono">🟩</span>
+                    <div>
+                      <h5>SIN NOVEDAD / ESTADO SIN SOLICITUD</h5>
+                      <p>El ciudadano no posee impedimentos legales vigentes en el sistema.</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+            </div>
+
           </div>
         </div>
       )}
