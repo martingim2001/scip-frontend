@@ -161,6 +161,12 @@ function App() {
       {/* Menú Desplegable */}
       {menuPerfilAbierto && (
         <div className="menu-desplegable">
+          <button className="btn-cambiar-usuario" onClick={() => {
+            setUsuarioLogueado(null);
+            setMenuPerfilAbierto(false);
+          }}>
+            🔄 Cambiar de Usuario
+          </button>
           <button className="btn-cerrar-sesion" onClick={() => setUsuarioLogueado(null)}>
             Cerrar Sesión
           </button>

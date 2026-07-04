@@ -718,3 +718,35 @@ body {
   justify-content: flex-start !important; /* Empuja el contenido hacia arriba */
   padding-top: 30px !important;           /* Controla el espacio con el borde superior */
 }
+/* ==========================================
+   BOTÓN CAMBIAR USUARIO
+========================================== */
+.btn-cambiar-usuario {
+  background-color: #2c3e50;
+  color: white;
+  border: 1px solid #34495e;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+  margin-bottom: 8px; /* Espacio para que no se pegue al botón de cerrar sesión */
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-cambiar-usuario:hover {
+  background-color: #3498db;
+  border-color: #3498db;
+}
+
+/* Un pequeño ajuste extra para que el de cerrar sesión también tenga icono alineado */
+.btn-cerrar-sesion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
