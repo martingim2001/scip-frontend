@@ -711,3 +711,10 @@ body {
     justify-content: flex-end !important;
   }
 }
+/* ==========================================
+   AJUSTE DE ESPACIO SUPERIOR EN INICIO
+========================================== */
+.menu-inicio-contenedor {
+  justify-content: flex-start !important; /* Empuja el contenido hacia arriba */
+  padding-top: 30px !important;           /* Controla el espacio con el borde superior */
+}
