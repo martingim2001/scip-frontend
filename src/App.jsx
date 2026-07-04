@@ -129,6 +129,12 @@ function App() {
 
                 <div className="contenedor-derecho">
                 <header className="cabecera-superior">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+    <button className="btn-hamburguesa" onClick={() => setMenuLateralAbierto(true)}>
+      ☰
+    </button>
+    <h2 className="titulo-operativo">Panel de Control Operativo</h2>
+  </div>
   
   {/* 1. Espacio izquierdo (para balancear el diseño) */}
   <div className="cabecera-espaciador"></div>
@@ -137,14 +143,6 @@ function App() {
   <div className="cabecera-centro">
     <h2 className="titulo-operativo">Panel de Control Operativo</h2>
   </div>
-  <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-    <button className="btn-hamburguesa" onClick={() => setMenuLateralAbierto(true)}>
-      ☰
-    </button>
-    <h2 className="titulo-operativo">Panel de Control Operativo</h2>
-  </div>
-
-  
   {/* 3. Lado Derecho: Perfil + Reloj (Orden Invertido) */}
   <div className="cabecera-derecha">
     
