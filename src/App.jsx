@@ -15,6 +15,7 @@ function App() {
   const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState(null);
   const [historialTrigger, setHistorialTrigger] = useState(0);
   const [menuConsultasAbierto, setMenuConsultasAbierto] = useState(false);
+  const [menuListadoAbierto, setMenuListadoAbierto] = useState(false);
   const [menuPerfilAbierto, setMenuPerfilAbierto] = useState(false);
   const [menuImpresionAbierto, setMenuImpresionAbierto] = useState(false);
   const [menuLateralAbierto, setMenuLateralAbierto] = useState(false);
@@ -134,6 +135,38 @@ function App() {
                 style={{ color: moduloActivo === 'personas' ? '#fff' : '#a0aabf' }}
               >
                 👤 Consulta Personas
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* ==========================================
+            MENÚ DESPLEGABLE DE LISTADOS
+        ========================================== */}
+        <div className="contenedor-desplegable">
+          <div 
+            className="boton-menu-principal" 
+            onClick={() => setMenuListadoAbierto(!menuListadoAbierto)}
+          >
+            <span>📋 Listados</span>
+            <span className="flecha-desplegable">{menuListadoAbierto ? '▼' : '▶'}</span>
+          </div>
+          
+          {menuListadoAbierto && (
+            <div className="submenu-opciones">
+              <div 
+                className="submenu-item" 
+                onClick={() => { setModuloActivo('listadoVehiculos'); setMenuLateralAbierto(false); }}
+                style={{ color: moduloActivo === 'listadoVehiculos' ? '#fff' : '#a0aabf' }}
+              >
+                🚗 Listado Vehículos
+              </div>
+              <div 
+                className="submenu-item" 
+                onClick={() => { setModuloActivo('listadoPersonas'); setMenuLateralAbierto(false); }}
+                style={{ color: moduloActivo === 'listadoPersonas' ? '#fff' : '#a0aabf' }}
+              >
+                👤 Listado Personas
               </div>
             </div>
           )}
