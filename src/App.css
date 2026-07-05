@@ -923,3 +923,41 @@ body {
     display: none;
   }
 }
+/* ==========================================
+   TÍTULO RESPONSIVE DEL HEADER
+========================================== */
+.contenedor-titulo-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.scip-siglas {
+  color: white;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0;
+}
+
+.scip-significado {
+  color: #a0aabf;
+  font-size: 0.85em;
+}
+
+/* Magia para celulares: Apila el texto y achica la letra */
+@media (max-width: 768px) {
+  .contenedor-titulo-header {
+    flex-direction: column; /* Pone un texto arriba del otro */
+    align-items: flex-start; /* Los tira para la izquierda */
+    gap: 0px; /* Saca el espacio entre los dos textos */
+  }
+  
+  .scip-siglas {
+    font-size: 1.2em; /* Achicamos un poco las siglas */
+  }
+  
+  .scip-significado {
+    font-size: 0.55em; /* Letra bien chiquita para que entre entera */
+    line-height: 1;
+  }
+}
