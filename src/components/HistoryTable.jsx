@@ -62,10 +62,9 @@ const HistoryTable = () => {
               </td>
               
               {/* Celda 4: Operador (Con el truco para que no se corte feo en celulares) */}
-              <td style={{ padding: '12px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '90px' }}>
+              <td style={{ padding: '12px', whiteSpace: 'nowrap' }}>
                 {item.operador}
               </td>
-
             </tr>
           );
         })}
