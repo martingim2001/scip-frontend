@@ -93,7 +93,7 @@ function App() {
   
   {/* Botón cruz para cerrar el menú en móviles */}
   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-    <h2 style={{ color: '#fff', margin: 0 }}>S.C.I.P.</h2>
+    <h2 className="titulo-sidebar">Panel de Control</h2>
     <button className="btn-cerrar-menu" onClick={() => setMenuLateralAbierto(false)}>✖</button>
   </div>
 
@@ -188,7 +188,9 @@ function App() {
 
   {/* 2. Título Central Absoluto */}
   <div className="cabecera-centro">
-    <h2 className="titulo-operativo">Panel de Control Operativo</h2>
+   <h2 style={{ color: 'white', margin: 0 }}>
+  S.C.I.P. <span style={{ fontSize: '0.6em', color: '#a0aabf', fontWeight: 'normal' }}>| Sistema de Consulta de Identidad Policial</span>
+</h2>
   </div>
   {/* 3. Lado Derecho: Perfil + Reloj (Orden Invertido) */}
   <div className="cabecera-derecha">
