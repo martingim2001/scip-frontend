@@ -35,25 +35,40 @@ const HistoryTable = () => {
           </tr>
         </thead>
         <tbody>
-          {historial.map((item) => {
-            // Formatear la hora para que quede prolija (ej: 16:06)
-            const fecha = new Date(item.fecha_hora);
-            const horaFormateada = fecha.toLocaleTimeString('es-AR', { hour: '2-digit', minute:'2-digit' });
-            
-            // Si el estado dice SECUESTRO o ROBO, lo pintamos de rojo. Si no, verde.
-            const esPeligro = item.estado_resultado.includes('ROBO') || item.estado_resultado.includes('SECUESTRO');
+         {historial.map((item) => {
+          // --- 1. LÓGICA (Variables puras) ---
+          const fechaObj = new Date(item.fecha_hora);
+          const fechaFormateada = fechaObj.toLocaleDateString('es-AR');
+          const horaFormateada = fechaObj.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+          
+          const esPeligro = item.estado_resultado.includes('ROBO') || item.estado_resultado.includes('SECUESTRO');
 
-            return (
-              <tr key={item.id} style={{ borderBottom: '1px solid #2c3e50' }}>
-                <td style={{ padding: '12px' }}>{horaFormateada}</td>
-                <td style={{ padding: '12px', fontWeight: 'bold' }}>{item.dominio_consultado}</td>
-                <td style={{ padding: '12px', color: esPeligro ? '#e74c3c' : '#2ecc71', fontWeight: 'bold' }}>
-                  {item.estado_resultado}
-                </td>
-                <td style={{ padding: '12px' }}>{item.operador}</td>
-              </tr>
-            );
-          })}
+          // --- 2. DISEÑO (Lo que se dibuja en pantalla) ---
+          return (
+            <tr key={item.id} style={{ borderBottom: '1px solid #2c3e50' }}>
+              
+              {/* Celda 1: Fecha y Hora */}
+              <td style={{ padding: '12px', lineHeight: '1.2' }}>
+                {fechaFormateada} <br/>
+                <span style={{ fontSize: '0.85em', color: '#a0aabf' }}>{horaFormateada}</span>
+              </td>
+              
+              {/* Celda 2: Dominio */}
+              <td style={{ padding: '12px', fontWeight: 'bold' }}>{item.dominio_consultado}</td>
+              
+              {/* Celda 3: Estado */}
+              <td style={{ padding: '12px', color: esPeligro ? '#e74c3c' : '#2ecc71', fontWeight: 'bold' }}>
+                {item.estado_resultado}
+              </td>
+              
+              {/* Celda 4: Operador (Con el truco para que no se corte feo en celulares) */}
+              <td style={{ padding: '12px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '90px' }}>
+                {item.operador}
+              </td>
+
+            </tr>
+          );
+        })}
           
           {historial.length === 0 && (
             <tr>
