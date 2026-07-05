@@ -917,3 +917,9 @@ body {
   font-weight: bold;
   font-size: 0.85em;
 }
+/* Ocultar el subtítulo largo en celulares para que no choque con el perfil */
+@media (max-width: 768px) {
+  .subtitulo-desktop {
+    display: none;
+  }
+}

@@ -189,7 +189,7 @@ function App() {
   {/* 2. Título Central Absoluto */}
   <div className="cabecera-centro">
    <h2 style={{ color: 'white', margin: 0 }}>
-  S.C.I.P. <span style={{ fontSize: '0.6em', color: '#a0aabf', fontWeight: 'normal' }}>| Sistema de Consulta de Identidad Policial</span>
+  S.C.I.P. <span className="subtitulo-desktop" style={{ fontSize: '0.6em', color: '#a0aabf', fontWeight: 'normal' }}>| Sistema de Consulta de Identidad Policial</span>
 </h2>
   </div>
   {/* 3. Lado Derecho: Perfil + Reloj (Orden Invertido) */}
