@@ -34,13 +34,11 @@ body {
 }
 
 .contenedor-derecho {
-  width: 100%; /* Ahora el contenido ocupa toda la pantalla */
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
+ width: 100%; 
+  height: 100vh; /* Le clavamos la altura exacta de la pantalla */
+  overflow-y: auto; /* Ahora sí o sí tiene que mostrar la ruedita */
   overflow-x: hidden;
-  padding-bottom: 50px;
+  padding-bottom: 100px;
 }
 
 /* ==========================================
