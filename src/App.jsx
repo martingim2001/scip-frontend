@@ -7,6 +7,7 @@ import CedulaPrint from './components/CedulaPrint';
 import ImprimirTodas from './components/ImprimirTodas';
 import ConsultaPersonas from './components/ConsultaPersonas';
 import ListadoPersonas from './components/ListadoPersonas';
+import ListadoVehiculos from './components/ListadoVehiculos';
 import './App.css';
 
 function App() {
@@ -162,18 +163,6 @@ function App() {
               >
                 🚗 Listado Vehículos
               </div>
-              {/* --- LA IMPRESIÓN DE REGISTROS QR --- */}
-                  <div 
-                    className="submenu-item"
-                    onClick={() => { window.open('/imprimir-todas', '_blank'); setMenuLateralAbierto(false); }}
-                    style={{ 
-                      color: '#a0aabf', 
-                      paddingLeft: '45px', 
-                      fontSize: '0.9em'    
-                    }}
-                  >
-                    ↳ 🖨️ Imprimir Registros (QR)
-                  </div>
               <div 
                 className="submenu-item" 
                 onClick={() => { setModuloActivo('listadoPersonas'); setMenuLateralAbierto(false); }}
@@ -318,7 +307,11 @@ function App() {
                       <HistoryTable key={historialTrigger} />
                     </div>
                   )}
-
+                  {moduloActivo === 'vehiculos' && (
+                    <div className="modulo-vehiculos" style={{ marginTop: '20px' }}>
+                      <ListadoVehiculos />
+                    </div>
+                  )}
                   {moduloActivo === 'personas' && (
                     <div className="modulo-personas" style={{ marginTop: '20px' }}>
                       <ConsultaPersonas />
