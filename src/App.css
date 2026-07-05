@@ -849,3 +849,72 @@ body {
   background-color: #2c3e50;
   color: white;
 }
+
+/* ==========================================
+   TABLA DE LISTADOS (S.C.I.P.)
+========================================== */
+.panel-listado {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* El contenedor que permite bajar (scroll vertical) */
+.tabla-contenedor-scroll {
+  max-height: 60vh; /* Ocupa el 60% del alto de la pantalla */
+  overflow-y: auto; /* Habilita la ruedita del mouse */
+  border-radius: 8px;
+  border: 1px solid #2a303c;
+  background-color: #121418;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.tabla-scip {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+/* Encabezado fijo para que no desaparezca al bajar */
+.tabla-scip th {
+  position: sticky;
+  top: 0; 
+  background-color: #1a252f;
+  color: #3498db;
+  padding: 15px;
+  font-weight: bold;
+  border-bottom: 2px solid #2c3e50;
+  z-index: 1;
+}
+
+.tabla-scip td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #2a303c;
+  color: #e0e0e0;
+}
+
+.tabla-scip tbody tr:hover {
+  background-color: rgba(52, 152, 219, 0.1);
+}
+
+/* Cartelitos de Estado (Badges) */
+.badge-rojo {
+  background-color: rgba(231, 76, 60, 0.2);
+  color: #e74c3c;
+  padding: 5px 10px;
+  border: 1px solid #e74c3c;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.85em;
+}
+
+.badge-verde {
+  background-color: rgba(46, 204, 113, 0.2);
+  color: #2ecc71;
+  padding: 5px 10px;
+  border: 1px solid #2ecc71;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.85em;
+}

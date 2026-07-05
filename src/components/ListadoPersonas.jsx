@@ -27,11 +27,14 @@ const ListadoPersonas = () => {
       <h3 style={{ color: 'white', textAlign: 'center', marginBottom: '20px' }}>
         📋 LISTADO GENERAL DE PERSONAS
       </h3>
-      
+
+      {/* Acá le damos uso a la variable 'cargando' */}
       {cargando ? (
-        <p style={{ color: 'white', textAlign: 'center' }}>Cargando datos del servidor...</p>
+        <p style={{ color: 'white', textAlign: 'center', marginTop: '30px' }}>
+          ⏳ Cargando datos del servidor policial...
+        </p>
       ) : (
-        <div className="tabla-contenedor">
+        <div className="tabla-contenedor-scroll">
           <table className="tabla-scip">
             <thead>
               <tr>
@@ -47,8 +50,7 @@ const ListadoPersonas = () => {
                   <td>{persona.dni}</td>
                   <td>{persona.apellido}, {persona.nombre}</td>
                   <td>
-                    {/* Le ponemos un cartelito de color según el estado */}
-                    {persona.pedido_captura ? (
+                    {persona.pedido_captura === 1 || persona.pedido_captura === true || persona.estado === 'CAPTURA' ? (
                       <span className="badge-rojo">CAPTURA</span>
                     ) : (
                       <span className="badge-verde">LIMPIO</span>
