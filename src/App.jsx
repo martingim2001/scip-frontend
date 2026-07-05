@@ -307,7 +307,7 @@ function App() {
                       <HistoryTable key={historialTrigger} />
                     </div>
                   )}
-                  {moduloActivo === 'vehiculos' && (
+                  {moduloActivo === 'listadoVehiculos' && (
                     <div className="modulo-vehiculos" style={{ marginTop: '20px' }}>
                       <ListadoVehiculos />
                     </div>
