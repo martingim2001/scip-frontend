@@ -18,7 +18,7 @@ function App() {
   const [menuConsultasAbierto, setMenuConsultasAbierto] = useState(false);
   const [menuListadoAbierto, setMenuListadoAbierto] = useState(false);
   const [menuPerfilAbierto, setMenuPerfilAbierto] = useState(false);
-  const [menuImpresionAbierto, setMenuImpresionAbierto] = useState(false);
+  //const [menuImpresionAbierto, setMenuImpresionAbierto] = useState(false);
   const [menuLateralAbierto, setMenuLateralAbierto] = useState(false);
 
   useEffect(() => {
@@ -162,6 +162,18 @@ function App() {
               >
                 🚗 Listado Vehículos
               </div>
+              {/* --- LA IMPRESIÓN DE REGISTROS QR --- */}
+                  <div 
+                    className="submenu-item"
+                    onClick={() => { window.open('/imprimir-todas', '_blank'); setMenuLateralAbierto(false); }}
+                    style={{ 
+                      color: '#a0aabf', 
+                      paddingLeft: '45px', 
+                      fontSize: '0.9em'    
+                    }}
+                  >
+                    ↳ 🖨️ Imprimir Registros (QR)
+                  </div>
               <div 
                 className="submenu-item" 
                 onClick={() => { setModuloActivo('listadoPersonas'); setMenuLateralAbierto(false); }}
@@ -172,30 +184,8 @@ function App() {
             </div>
           )}
         </div>
-    
-    {/* Menú desplegable de impresiones */}
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-      <p onClick={() => setMenuImpresionAbierto(!menuImpresionAbierto)} style={{ color: '#888', fontWeight: 'bold', cursor: 'pointer' }}>
-        🖨️ Impresión Tarjeta <span style={{ float: 'right', fontSize: '10px', marginTop: '4px' }}>{menuImpresionAbierto ? '▲' : '▼'}</span>
-      </p>
-      
-      {menuImpresionAbierto && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', paddingLeft: '15px', marginTop: '5px' }}>
-          <button onClick={() => window.open('/imprimir', '_blank')} className="btn-sidebar-print">
-            📄 Imprimir Cédula
-          </button>
-          <button onClick={() => window.open('/imprimir-todas', '_blank')} className="btn-sidebar-print">
-            📑 Imprimir Registro
-          </button>
-        </div>
-      )}
-    </div>
-
-    <p style={{ color: '#888', cursor: 'not-allowed' }}>📁 ABM Novedades</p>
-    <p style={{ color: '#888', cursor: 'not-allowed' }}>📊 Auditoría</p>
   </nav>
 </aside>
-
                 <div className="contenedor-derecho">
                 <header className="cabecera-superior">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
