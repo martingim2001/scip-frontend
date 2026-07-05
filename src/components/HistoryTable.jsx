@@ -20,12 +20,12 @@ const HistoryTable = () => {
   }, []); // Se ejecuta al cargar, o cuando App.jsx fuerza el cambio con la 'key'
 
   return (
-    <div className="historial-container" style={{ marginTop: '40px' }}>
+    <div className="historial-container" style={{ marginTop: '40px', overflowX: 'auto', maxWidth: '100vw' }}>
       <h3 style={{ color: 'white', borderBottom: '1px solid #34495e', paddingBottom: '10px', textAlign: 'center' }}>
         Historial de Consultas de Dependencia
       </h3>
       
-      <table style={{ width: '100%', color: 'white', marginTop: '15px', textAlign: 'center', borderCollapse: 'collapse', fontSize: '14px' }}>
+      <table style={{ width: '100%', color: 'white', marginTop: '15px', textAlign: 'center', borderCollapse: 'collapse', whiteSpace: 'nowrap' }}>
         <thead>
           <tr style={{ borderBottom: '2px solid #34495e' }}>
             <th style={{ padding: '10px' }}>Fecha/Hora</th>
